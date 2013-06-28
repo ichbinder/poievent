@@ -12,7 +12,6 @@ import de.htw_berlin.f4.ai.kbe.poievent.Event;
 import de.htw_berlin.f4.ai.kbe.poievent.Message;
 import de.htw_berlin.f4.ai.kbe.poievent.Poi;
 import de.htw_berlin.f4.ai.kbe.poievent.PoiEventFacade;
-import de.htw_berlin.opentoken.ApplicationService.AddUser;
 import de.htw_berlin.opentoken.ApplicationService.AnApplicationService;
 
 
@@ -21,9 +20,7 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 	
 	@Autowired
 	AnApplicationService anApplicationService;
-	
-	@Autowired
-	AddUser addUser;
+
 	
 	
 	public void createSimplePOI(Long userId, String name, Set<String> tags,
