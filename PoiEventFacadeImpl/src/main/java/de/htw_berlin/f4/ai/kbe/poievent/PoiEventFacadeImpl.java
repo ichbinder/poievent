@@ -161,42 +161,65 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 
 	public Long createUser(String name, String firstname, String email) {
 		// TODO Auto-generated method stub
-		return null;
+		if(userService.checkEmail(email))
+			return userService.createUser(name, firstname, email);
+		else
+			throw new IllegalArgumentException("Email schon vergeben");
 	}
 
 	public void setAdminRole(Long userId) {
 		// TODO Auto-generated method stub
-		
+		if(userService.validateUser(userId))
+			userService.setAdminRole(userId);
+		else
+			throw new IllegalArgumentException("User nicht gefunden");
 	}
 
 	public boolean hasAdminRole(Long userId) {
 		// TODO Auto-generated method stub
-		return false;
+		if(userService.validateUser(userId))
+			return userService.validateAdmin(userId);
+		else
+			throw new IllegalArgumentException("User nicht gefunden");
 	}
 
 	public void removeAdminRole(Long userId) {
 		// TODO Auto-generated method stub
-		
+		if(userService.validateUser(userId))
+			userService.removeAdmin(userId);
+		else
+			throw new IllegalArgumentException("User nicht gefunden");
 	}
 
 	public Long getUserId(String email) {
 		// TODO Auto-generated method stub
-		return null;
+		if(userService.validateEmail(email))
+			return userService.getUserByEmail(email);
+		else
+			return null;
 	}
 
 	public void deleteUser(Long userId) {
 		// TODO Auto-generated method stub
-		
+		if(userService.validateUser(userId))
+			userService.deleteUserById(userId);
 	}
 
 	public void deleteUser(String email) {
 		// TODO Auto-generated method stub
-		
+		if(userService.validateEmail(email))
+			userService.deleteUserByEmail(email);
 	}
 
 	public void addMessage(Long eventId, Long userId, String title,
 			String content) {
 		// TODO Auto-generated method stub
-		
+		if(informationService.validateEvent(eventId))
+		{
+			if(informationService.isPartInEvent(eventId, userId))
+				informationService.addMessage(eventId, title, content);
+		}
+		else
+			throw new IllegalArgumentException("Event nicht gefunden");
 	}
 }

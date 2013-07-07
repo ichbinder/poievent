@@ -65,4 +65,22 @@ public class InformationServiceImpl implements InformationService {
 		return null;
 	}
 
+	@Override
+	public boolean validateEventByUser(Long eventId, Long userId) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isPartInEvent(Long eventId, Long userId) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void addMessage(Long eventId, String title, String content) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

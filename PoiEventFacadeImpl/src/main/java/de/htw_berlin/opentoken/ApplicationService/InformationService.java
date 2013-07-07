@@ -26,4 +26,10 @@ public interface InformationService {
 
 	List<Message> getMessage(Long eventId);
 
+	boolean validateEventByUser(Long eventId, Long userId);
+
+	boolean isPartInEvent(Long eventId, Long userId);
+
+	void addMessage(Long eventId, String title, String content);
+
 }
