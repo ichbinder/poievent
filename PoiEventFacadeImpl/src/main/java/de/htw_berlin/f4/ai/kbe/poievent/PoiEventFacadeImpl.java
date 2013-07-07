@@ -13,14 +13,19 @@ import de.htw_berlin.f4.ai.kbe.poievent.Message;
 import de.htw_berlin.f4.ai.kbe.poievent.Poi;
 import de.htw_berlin.f4.ai.kbe.poievent.PoiEventFacade;
 import de.htw_berlin.opentoken.ApplicationService.AnApplicationService;
+import de.htw_berlin.opentoken.ApplicationService.InformationSerice;
+import de.htw_berlin.opentoken.ApplicationService.UserService;
 
 
 public class PoiEventFacadeImpl implements PoiEventFacade{
 
 	
 	@Autowired
-	AnApplicationService anApplicationService;
-
+	UserService userService;
+	@Autowired
+	InformationSerice informationSerice;
+	@Autowired
+	PoiService anApplicationService;
 	
 	
 	public void createSimplePOI(Long userId, String name, Set<String> tags,
@@ -78,6 +83,10 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 	public long createEvent(Long userId, String poiName, String title,
 			String description) {
 		// TODO Auto-generated method stub
+		if(hasAdminRole(userId))
+			informationsService.erstelleEvent(userId, poiName, title);
+		else
+			throw new
 		return 0;
 	}
 
@@ -151,9 +160,4 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 		// TODO Auto-generated method stub
 		
 	}
-
-
-
-	
-	
 }
