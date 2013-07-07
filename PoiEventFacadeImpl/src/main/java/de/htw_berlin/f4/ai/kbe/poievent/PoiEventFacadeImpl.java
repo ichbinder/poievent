@@ -72,6 +72,7 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 
 	public Poi getPoi(String name) {
 		// TODO Auto-generated method stub
+			 
 		return null;
 	}
 
