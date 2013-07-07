@@ -3,10 +3,10 @@ package de.htw_berlin.opentoken.ApplicationService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class PoiServiceImpl implements PoiService{
 
 	@Override
-	public boolean validateUser(Long userId) {
+	public boolean validatePoi(String poiName) {
 		// TODO Auto-generated method stub
 		return false;
 	}

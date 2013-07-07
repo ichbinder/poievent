@@ -6,14 +6,8 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import de.htw_berlin.f4.ai.kbe.poievent.AuthorizationException;
-import de.htw_berlin.f4.ai.kbe.poievent.Coordinate;
-import de.htw_berlin.f4.ai.kbe.poievent.Event;
-import de.htw_berlin.f4.ai.kbe.poievent.Message;
-import de.htw_berlin.f4.ai.kbe.poievent.Poi;
-import de.htw_berlin.f4.ai.kbe.poievent.PoiEventFacade;
-import de.htw_berlin.opentoken.ApplicationService.AnApplicationService;
-import de.htw_berlin.opentoken.ApplicationService.InformationSerice;
+import de.htw_berlin.opentoken.ApplicationService.InformationService;
+import de.htw_berlin.opentoken.ApplicationService.PoiService;
 import de.htw_berlin.opentoken.ApplicationService.UserService;
 
 
@@ -23,9 +17,9 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 	@Autowired
 	UserService userService;
 	@Autowired
-	InformationSerice informationSerice;
+	InformationService informationService;
 	@Autowired
-	PoiService anApplicationService;
+	PoiService poiService;
 	
 	
 	public void createSimplePOI(Long userId, String name, Set<String> tags,
@@ -72,52 +66,91 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 
 	public Poi getPoi(String name) {
 		// TODO Auto-generated method stub
-		
-		//for dummy test
-	 
-		anApplicationService.doSomeThing();
-		 
+			 
 		return null;
 	}
 
 	public long createEvent(Long userId, String poiName, String title,
 			String description) {
 		// TODO Auto-generated method stub
+		Event event;
+		
 		if(hasAdminRole(userId))
-			informationsService.erstelleEvent(userId, poiName, title);
+			event = informationService.erstelleEvent(userId, poiName, title);
 		else
-			throw new
-		return 0;
+			throw new IllegalArgumentException("Ist kein Admin");
+		return event.getEventId();
 	}
 
 	public void deleteEvent(Long userId, Long eventId) {
 		// TODO Auto-generated method stub
-		
+		if(hasAdminRole(userId))
+		{	
+			if(userId == informationService.istBesitzerVon(userId))	
+			{	
+				informationService.loescheEvent(userId, eventId);
+			}
+			else
+				throw new IllegalArgumentException("Hat Event nicht angelegt");
+		}
+		else
+			throw new IllegalArgumentException("Ist kein Admin");
 	}
 
 	public Set<Event> findEventsForPoi(String poiName) {
 		// TODO Auto-generated method stub
-		return null;
+		Set<Event> temp;
+		if(poiService.validatePoi(poiName))
+			temp = informationService.erstellePoiListe(poiName);
+		else
+			throw new IllegalArgumentException("POI nicht gefunden");
+		
+		return temp;
 	}
 
 	public void subscribeToEvent(Long userId, Long eventId) {
 		// TODO Auto-generated method stub
-		
+		if(userService.validateUser(userId))
+		{
+			if(informationService.validateEvent(eventId))
+				informationService.addUserToEvent(userId, eventId);
+			else
+				throw new IllegalArgumentException("Event nicht gefunden");
+		}
+		else
+			throw new IllegalArgumentException("User nicht gefunden");
 	}
 
 	public Set<Event> findSubscribedEvents(Long userId) {
 		// TODO Auto-generated method stub
-		return null;
+		Set<Event> temp;
+		if(userService.validateUser(userId))
+			temp = informationService.findSubscribedEventsBy(userId);
+		else
+			throw new IllegalArgumentException("User nicht gefunden");
+		
+		return temp;
 	}
 
 	public Set<Event> findOwnedEvents(Long userId) {
 		// TODO Auto-generated method stub
-		return null;
+		Set<Event> temp;
+		if(userService.validateUser(userId))
+			temp = informationService.findOwnedEventsBy(userId);
+		else
+			throw new IllegalArgumentException("User nicht gefunden");
+		
+		return temp;
 	}
 
 	public List<Message> getMessages(Long eventId) {
 		// TODO Auto-generated method stub
-		return null;
+		List<Message> temp;
+		if(informationService.validateEvent(eventId))
+			temp = informationService.getMessage(eventId);
+		else
+			throw new IllegalArgumentException("Event nicht gefunden");
+		return temp;
 	}
 
 	public Long createUser(String name, String firstname, String email) {
