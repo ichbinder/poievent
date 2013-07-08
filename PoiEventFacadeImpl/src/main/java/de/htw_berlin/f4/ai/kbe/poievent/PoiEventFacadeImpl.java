@@ -100,9 +100,9 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 		// TODO Auto-generated method stub
 		if(hasAdminRole(userId))
 		{	
-			if(userId == informationService.istBesitzerVon(userId))	
+			if(userId == informationService.istBesitzerVon(eventId))	
 			{	
-				informationService.loescheEvent(userId, eventId);
+				informationService.loescheEvent(eventId);
 			}
 			else
 				throw new IllegalArgumentException("Hat Event nicht angelegt");

@@ -37,7 +37,10 @@ public class UserModel implements Serializable {
 		this.admin = false;
 		return userId;
 	}
-
+	public Long getUserId()
+	{
+		return userId;
+	}
 	public String getName() {
 		return name;
 	}

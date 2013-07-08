@@ -1,13 +1,14 @@
 package de.htw_berlin.f4.ai.kbe.model;
 
+import java.util.Calendar;
 import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 
 
@@ -21,7 +22,10 @@ public class EventModel {
 	private String title;
 	
 	private String description;
-	@ManyToOne
+	
+	private Calendar date;
+	
+	@OneToOne
 	private UserModel createdBy;
 	@ManyToMany
 	private Set<UserModel> subscribedBy;
@@ -33,12 +37,24 @@ public class EventModel {
 		this.title = title;
 		this.description = description;
 		this.createdBy = createdBy;
+		this.date = null;
 	}
 	public EventModel(UserModel createdBy)
 	{
 		this.createdBy = createdBy;
 	}
-	
+	public UserModel getOwner()
+	{
+		return createdBy;
+	}
+	public Long getEventId()
+	{
+		return eventId; 
+	}
+	public Calendar getDate()
+	{
+		return date;
+	}
 	public String getTitle() {
 		return title;
 	}

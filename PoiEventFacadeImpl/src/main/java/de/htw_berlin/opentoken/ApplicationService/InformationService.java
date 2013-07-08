@@ -12,7 +12,7 @@ public interface InformationService {
 
 	Long istBesitzerVon(Long userId);
 
-	void loescheEvent(Long userId, Long eventId);
+	void loescheEvent(Long eventId);
 
 	Set<Event> erstellePoiListe(String poiName);
 
