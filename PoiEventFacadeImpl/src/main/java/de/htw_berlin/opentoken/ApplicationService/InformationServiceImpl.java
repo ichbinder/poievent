@@ -3,17 +3,30 @@ package de.htw_berlin.opentoken.ApplicationService;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.htw_berlin.f4.ai.kbe.poievent.Event;
 import de.htw_berlin.f4.ai.kbe.poievent.Message;
+import de.htw_berlin.f4.ai.kbe.springdatarepository.InformationRepository;
+import de.htw_berlin.f4.ai.kbe.springdatarepository.UserRepository;
 
 @Service
 public class InformationServiceImpl implements InformationService {
 
+	@Autowired
+	private InformationRepository informationRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
+	
 	@Override
+	@Transactional
 	public Event erstelleEvent(Long userId, String poiName, String title) {
 		// TODO Auto-generated method stub
+		Event event = new Event(userRepository.findBy(userId));
+		
 		return null;
 	}
 

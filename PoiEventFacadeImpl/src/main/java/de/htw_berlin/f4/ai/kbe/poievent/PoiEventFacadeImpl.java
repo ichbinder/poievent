@@ -14,6 +14,14 @@ import de.htw_berlin.f4.ai.kbe.poievent.Poi;
 import de.htw_berlin.f4.ai.kbe.poievent.PoiEventFacade;
 import de.htw_berlin.opentoken.ApplicationService.InformationService;
 import de.htw_berlin.opentoken.ApplicationService.PoiService;
+import de.htw_berlin.f4.ai.kbe.poievent.AuthorizationException;
+import de.htw_berlin.f4.ai.kbe.poievent.Coordinate;
+import de.htw_berlin.f4.ai.kbe.poievent.Event;
+import de.htw_berlin.f4.ai.kbe.poievent.Message;
+import de.htw_berlin.f4.ai.kbe.poievent.Poi;
+import de.htw_berlin.f4.ai.kbe.poievent.PoiEventFacade;
+import de.htw_berlin.opentoken.ApplicationService.InformationService;
+import de.htw_berlin.opentoken.ApplicationService.PoiService;
 import de.htw_berlin.opentoken.ApplicationService.UserService;
 
 
@@ -203,12 +211,16 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 		// TODO Auto-generated method stub
 		if(userService.validateUser(userId))
 			userService.deleteUserById(userId);
+		else
+			throw new IllegalArgumentException("User-ID nicht gefunden");
 	}
 
 	public void deleteUser(String email) {
 		// TODO Auto-generated method stub
 		if(userService.validateEmail(email))
 			userService.deleteUserByEmail(email);
+		else
+			throw new IllegalArgumentException("Email-adresse nicht gefunden");
 	}
 
 	public void addMessage(Long eventId, Long userId, String title,

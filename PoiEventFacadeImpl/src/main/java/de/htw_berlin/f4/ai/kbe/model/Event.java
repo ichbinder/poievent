@@ -1,8 +1,15 @@
 package de.htw_berlin.f4.ai.kbe.model;
 
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+
 
 @Entity
 public class Event {
@@ -14,6 +21,23 @@ public class Event {
 	private String title;
 	
 	private String description;
+	@ManyToOne
+	private User createdBy;
+	@ManyToMany
+	private Set<User> subscribedBy;
+	@OneToMany
+	private Set<Message> messages;
+	
+	public Event(String title,String description,User createdBy)
+	{
+		this.title = title;
+		this.description = description;
+		this.createdBy = createdBy;
+	}
+	public Event(User createdBy)
+	{
+		this.createdBy = createdBy;
+	}
 	
 	public String getTitle() {
 		return title;
@@ -29,5 +53,22 @@ public class Event {
 	
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	public void addSubscribtion(User user)
+	{
+		subscribedBy.add(user);
+	}
+	
+	public Set<User> getSubscribted(){
+		return subscribedBy;
+	}
+	public void addMessage(Message message)
+	{
+		messages.add(message);
+	}
+	
+	public Set<Message> getMessage(){
+		return messages;
 	}
 }
