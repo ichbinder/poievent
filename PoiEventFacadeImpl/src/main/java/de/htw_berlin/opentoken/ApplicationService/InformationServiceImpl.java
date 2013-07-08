@@ -27,7 +27,7 @@ public class InformationServiceImpl implements InformationService {
 		// TODO Auto-generated method stub
 		Event event = new Event(userRepository.findBy(userId));
 		
-		return null;
+		return event;
 	}
 
 	@Override
