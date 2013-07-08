@@ -12,7 +12,7 @@ import javax.persistence.OneToMany;
 
 
 @Entity
-public class Event {
+public class EventModel {
 
 	@Id 
 	@GeneratedValue 
@@ -22,19 +22,19 @@ public class Event {
 	
 	private String description;
 	@ManyToOne
-	private User createdBy;
+	private UserModel createdBy;
 	@ManyToMany
-	private Set<User> subscribedBy;
+	private Set<UserModel> subscribedBy;
 	@OneToMany
-	private Set<Message> messages;
+	private Set<MessageModel> messages;
 	
-	public Event(String title,String description,User createdBy)
+	public EventModel(String title,String description,UserModel createdBy)
 	{
 		this.title = title;
 		this.description = description;
 		this.createdBy = createdBy;
 	}
-	public Event(User createdBy)
+	public EventModel(UserModel createdBy)
 	{
 		this.createdBy = createdBy;
 	}
@@ -55,20 +55,20 @@ public class Event {
 		this.description = description;
 	}
 	
-	public void addSubscribtion(User user)
+	public void addSubscribtion(UserModel user)
 	{
 		subscribedBy.add(user);
 	}
 	
-	public Set<User> getSubscribted(){
+	public Set<UserModel> getSubscribted(){
 		return subscribedBy;
 	}
-	public void addMessage(Message message)
+	public void addMessage(MessageModel message)
 	{
 		messages.add(message);
 	}
 	
-	public Set<Message> getMessage(){
+	public Set<MessageModel> getMessage(){
 		return messages;
 	}
 }

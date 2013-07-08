@@ -5,7 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class Coordinate {
+public class CoordinateModel {
 
 	@Id 
 	@GeneratedValue 
@@ -15,7 +15,7 @@ public class Coordinate {
 	
 	private float longitude;
 	
-	public Coordinate(float latitute, float longitude) {
+	public CoordinateModel(float latitute, float longitude) {
 		this.latitude = latitute;
 		this.longitude = longitude;
 	}

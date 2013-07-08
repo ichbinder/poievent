@@ -7,7 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity 
-public class User implements Serializable {
+public class UserModel implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -23,10 +23,10 @@ public class User implements Serializable {
 	
 	Boolean admin;
 	
-	public User(){
+	public UserModel(){
 	}
 	
-	public User(String name, String firstname, String email) {
+	public UserModel(String name, String firstname, String email) {
 		this.createUser(name, firstname, email);
 	}
 	

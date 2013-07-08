@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import de.htw_berlin.f4.ai.kbe.model.User;
+import de.htw_berlin.f4.ai.kbe.model.UserModel;
 import de.htw_berlin.f4.ai.kbe.poievent.Event;
 import de.htw_berlin.f4.ai.kbe.poievent.Message;
 import de.htw_berlin.f4.ai.kbe.springdatarepository.PoiRepository;
@@ -21,7 +21,7 @@ public class InformationServiceImpl implements InformationService {
 	@Override
 	@Transactional
 	public Event erstelleEvent(Long userId, String poiName, String title) {
-		User user = poiRepository.findOne(userId);
+		UserModel user = poiRepository.findOne(userId);
 		if (user == null)
 			throw new IllegalArgumentException();
 		user.checkAdmin();

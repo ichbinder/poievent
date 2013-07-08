@@ -7,9 +7,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Message {
-
-	private static final String mappedBy = null;
+public class MessageModel {
 
 	@Id 
 	@GeneratedValue 
@@ -17,11 +15,12 @@ public class Message {
 	
 	private String title;
 	private String content;
+	
 	@OneToOne
-	private Event isContedOf;
+	private EventModel isContedOf;
 	
 	@ManyToOne
-	private User createdBy;
+	private UserModel createdBy;
 	
 	public String getTitle() {
 		return title;

@@ -5,7 +5,7 @@ import java.util.Set;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-public class CityPoi extends SimplePoi{
+public class CityPoiModel extends SimplePoiModel{
 
 	@Id 
 	@GeneratedValue 
@@ -15,11 +15,11 @@ public class CityPoi extends SimplePoi{
 	
 	private String city;
 	
-	public CityPoi(){
+	public CityPoiModel(){
 		super();
 	}
 	
-	public CityPoi(String name, Set<String> tags, String street,
+	public CityPoiModel(String name, Set<String> tags, String street,
 			String city, Float latitude, Float longitude){
 		super(name, tags, longitude, latitude);
 		this.street = street;

@@ -10,7 +10,7 @@ import javax.persistence.InheritanceType;
 
 @Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-public abstract class Poi {
+public abstract class PoiModel {
 	
 	@Id 
 	@GeneratedValue 

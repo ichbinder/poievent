@@ -8,25 +8,25 @@ import javax.persistence.Entity;
 
 @Entity
 @DiscriminatorValue(value="PolygonPoi")
-public class PolygonPoi extends Poi {
+public class PolygonPoiModel extends PoiModel {
 	
-	private List<Coordinate> polygon;
+	private List<CoordinateModel> polygon;
 
-	public PolygonPoi(){	
+	public PolygonPoiModel(){	
 		super();
 	}
 	
-	public PolygonPoi(String name, Set<String> tags, List<Coordinate> polygon){
+	public PolygonPoiModel(String name, Set<String> tags, List<CoordinateModel> polygon){
 		this.name =name;
 		this.tags = tags;
 		this.polygon = polygon;
 	}
 	
-	public List<Coordinate> getPolygon() {
+	public List<CoordinateModel> getPolygon() {
 		return polygon;
 	}
 
-	public void setPolygon(List<Coordinate> polygon) {
+	public void setPolygon(List<CoordinateModel> polygon) {
 		this.polygon = polygon;
 	}
 	
