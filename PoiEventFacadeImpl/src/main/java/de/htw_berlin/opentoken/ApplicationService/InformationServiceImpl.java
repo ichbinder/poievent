@@ -7,27 +7,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import de.htw_berlin.f4.ai.kbe.model.User;
 import de.htw_berlin.f4.ai.kbe.poievent.Event;
 import de.htw_berlin.f4.ai.kbe.poievent.Message;
-import de.htw_berlin.f4.ai.kbe.springdatarepository.InformationRepository;
-import de.htw_berlin.f4.ai.kbe.springdatarepository.UserRepository;
+import de.htw_berlin.f4.ai.kbe.springdatarepository.PoiRepository;
 
 @Service
 public class InformationServiceImpl implements InformationService {
 
 	@Autowired
-	private InformationRepository informationRepository;
-	
-	@Autowired
-	private UserRepository userRepository;
+	PoiRepository poiRepository;
 	
 	@Override
 	@Transactional
 	public Event erstelleEvent(Long userId, String poiName, String title) {
-		// TODO Auto-generated method stub
-		Event event = new Event(userRepository.findBy(userId));
-		
-		return event;
+		User user = poiRepository.findOne(userId);
+		if (user == null)
+			throw new IllegalArgumentException();
+		user.checkAdmin();
+		return null;
 	}
 
 	@Override
