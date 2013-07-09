@@ -1,5 +1,7 @@
 package de.htw_berlin.opentoken.ApplicationService;
 
+import de.htw_berlin.f4.ai.kbe.model.UserModel;
+
 public interface UserService {
 
 	boolean validateUser(Long userId);
@@ -21,5 +23,7 @@ public interface UserService {
 	boolean validateEmail(String email);
 
 	boolean checkEmail(String email);
+	
+	UserModel getUserById(Long userId);
 
 }

@@ -99,4 +99,10 @@ public class UserServiceImpl implements UserService {
 			checkValue = true;
 		return checkValue;
 	}
+
+	@Override
+	public UserModel getUserById(Long userId) {
+		// TODO Auto-generated method stub
+		return userRepository.findOne(userId);
+	}
 }

@@ -84,7 +84,7 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 			if(hasAdminRole(userId))
 			{	
 				event = informationService.erstelleEvent(userId, title, description);
-				poiService.addEvent(event, poiName);
+				poiService.addEvent(event,userService.getUserById(userId), poiName);
 			}	
 			else
 				throw new IllegalArgumentException("Ist kein Admin");
