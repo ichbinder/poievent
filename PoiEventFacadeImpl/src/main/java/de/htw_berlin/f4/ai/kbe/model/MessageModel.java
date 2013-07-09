@@ -16,12 +16,12 @@ public class MessageModel {
 	private String title;
 	private String content;
 	
-	@OneToOne
-	private EventModel isContedOf;
-	
-	@ManyToOne
-	private UserModel createdBy;
-	
+	public MessageModel(String title, String content)
+	{
+		this.title = title;
+		this.content = content;
+	}
+
 	public String getTitle() {
 		return title;
 	}

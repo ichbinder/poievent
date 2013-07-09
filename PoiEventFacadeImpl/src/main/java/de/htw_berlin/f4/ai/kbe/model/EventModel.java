@@ -1,6 +1,7 @@
 package de.htw_berlin.f4.ai.kbe.model;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -24,13 +25,11 @@ public class EventModel {
 	private Calendar date;
 	
 	@OneToOne
-	private UserModel createdBy;
+	public UserModel createdBy;
 	@ManyToMany
-	private Set<UserModel> subscribedBy; <--- Achtung bei der verknüpfung da muessen wir noch mal reden.
+	public Set<UserModel> subscribedBy;
 	@OneToMany
-	private Set<MessageModel> messages;
-	@OneToMany
-	private PoiModel poi;
+	publc List<MessageModel> messages;
 	
 	public EventModel(String title,String description,UserModel createdBy)
 	{
@@ -84,7 +83,7 @@ public class EventModel {
 		messages.add(message);
 	}
 	
-	public Set<MessageModel> getMessage(){
+	public List<MessageModel> getMessage(){
 		return messages;
 	}
 }
