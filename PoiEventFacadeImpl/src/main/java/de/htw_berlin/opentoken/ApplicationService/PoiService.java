@@ -3,7 +3,6 @@ package de.htw_berlin.opentoken.ApplicationService;
 import java.util.List;
 import java.util.Set;
 
-import de.htw_berlin.f4.ai.kbe.poievent.AuthorizationException;
 import de.htw_berlin.f4.ai.kbe.poievent.Coordinate;
 import de.htw_berlin.f4.ai.kbe.poievent.Poi;
 
@@ -13,8 +12,7 @@ public interface PoiService {
 			Float latitude, Float longitude);
 
 	public void createCityPOI(Long userId, String name, Set<String> tags,
-			String street, String city, Float latitude, Float longitude)
-			throws AuthorizationException;
+			String street, String city, Float latitude, Float longitude);
 
 	public void createPolygonPOI(Long userId, String name, Set<String> tags,
 			List<Coordinate> polygon);

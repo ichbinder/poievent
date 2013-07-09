@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
@@ -16,6 +17,9 @@ public abstract class PoiModel {
 	@Id 
 	@GeneratedValue 
 	Long poiId;
+	
+	@OneToOne(mappedBy="poi")
+	protected UserModel createdBy;
 	
 	protected String name;
 	
@@ -46,5 +50,13 @@ public abstract class PoiModel {
 
 	public void setEvents(Set<EventModel> events) {
 		this.events = events;
+	}
+
+	public UserModel getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(UserModel createdBy) {
+		this.createdBy = createdBy;
 	}	
 }

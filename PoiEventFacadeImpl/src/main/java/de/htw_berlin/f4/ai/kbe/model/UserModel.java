@@ -5,23 +5,27 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity 
 public class UserModel implements Serializable {
-
-	private static final long serialVersionUID = 1L;
 	
+	private static final long serialVersionUID = 1L;
+
 	@Id 
 	@GeneratedValue 
 	Long userId;
 	
-	String name;
+	private String name;
 	
-	String firstname;
+	private String firstname;
 	
-	String email;
+	private String email;
 	
-	Boolean admin;
+	private Boolean admin;
+	
+	@OneToOne
+	private PoiModel poi;
 	
 	public UserModel(){
 	}

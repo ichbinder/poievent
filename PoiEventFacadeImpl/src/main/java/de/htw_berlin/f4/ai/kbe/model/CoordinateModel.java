@@ -3,6 +3,7 @@ package de.htw_berlin.f4.ai.kbe.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class CoordinateModel {
@@ -14,6 +15,9 @@ public class CoordinateModel {
 	private float latitude;
 	
 	private float longitude;
+	
+	@OneToOne
+	private PolygonPoiModel polygonPoi;
 	
 	public CoordinateModel(float latitute, float longitude) {
 		this.latitude = latitute;

@@ -5,20 +5,23 @@ import java.util.Set;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 
 @Entity
 @DiscriminatorValue(value="PolygonPoi")
 public class PolygonPoiModel extends PoiModel {
 	
+	@OneToOne(mappedBy="polygonPoi")
 	private List<CoordinateModel> polygon;
 
 	public PolygonPoiModel(){	
 		super();
 	}
 	
-	public PolygonPoiModel(String name, Set<String> tags, List<CoordinateModel> polygon){
+	public PolygonPoiModel(String name, Set<String> tags, UserModel createdBy, List<CoordinateModel> polygon){
 		this.name =name;
 		this.tags = tags;
+		this.createdBy = createdBy;
 		this.polygon = polygon;
 	}
 	
@@ -28,8 +31,5 @@ public class PolygonPoiModel extends PoiModel {
 
 	public void setPolygon(List<CoordinateModel> polygon) {
 		this.polygon = polygon;
-	}
-	
-	
-	
+	}	
 }
