@@ -30,50 +30,56 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 	
 	public void createSimplePOI(Long userId, String name, Set<String> tags,
 			Float latitude, Float longitude) {
-		
-		
-		
-		// TODO Auto-generated method stub
-		
+		if(hasAdminRole(userId))
+			poiService.createSimplePOI(userId, name, tags, latitude, longitude);
+		else
+			throw new AuthorizationException(userId);
 	}
 
 	public void createCityPOI(Long userId, String name, Set<String> tags,
 			String street, String city, Float latitude, Float longitude)
 			throws AuthorizationException {
-		// TODO Auto-generated method stub
-		
+		if(hasAdminRole(userId))
+			poiService.createCityPOI(userId, name, tags, street, city, latitude, longitude);
+		else
+			throw new AuthorizationException(userId);
 	}
 
 	public void createPolygonPOI(Long userId, String name, Set<String> tags,
 			List<Coordinate> polygon) {
-		// TODO Auto-generated method stub
-		
+		if(hasAdminRole(userId))
+			poiService.createPolygonPOI(userId, name, tags, polygon);
+		else
+			throw new AuthorizationException(userId);
 	}
 
 	public void deletePOI(Long userId, String name) {
-		// TODO Auto-generated method stub
-		
+		if(hasAdminRole(userId))
+			poiService.deletePOI(userId, name);
+		else
+			throw new AuthorizationException(userId);
 	}
 
 	public void addPoiTag(Long userId, String name, String tag) {
-		// TODO Auto-generated method stub
-		
+		if(hasAdminRole(userId))
+			poiService.addPoiTag(userId, name, tag);
+		else
+			throw new AuthorizationException(userId);
 	}
 
 	public void deletePoiTag(Long userId, String name, String tag) {
-		// TODO Auto-generated method stub
-		
+		if(hasAdminRole(userId))
+			poiService.deletePoiTag(userId, name, tag);
+		else
+			throw new AuthorizationException(userId);		
 	}
 
 	public Set<Poi> getPoiByTag(String tag) {
-		// TODO Auto-generated method stub
-		return null;
+		return poiService.getPoiByTag(tag);
 	}
 
 	public Poi getPoi(String name) {
-		// TODO Auto-generated method stub
-			 
-		return null;
+		return getPoi(name);
 	}
 
 	public long createEvent(Long userId, String poiName, String title, String description) {
