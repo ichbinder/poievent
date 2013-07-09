@@ -80,11 +80,19 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 			String description) {
 		// TODO Auto-generated method stub
 		Event event;
-		
-		if(hasAdminRole(userId))
-			event = informationService.erstelleEvent(userId, poiName, title);
+		if(poiService.getPoi(poiName) != null)
+		{	
+			if(hasAdminRole(userId))
+			{	
+				event = informationService.erstelleEvent(userId, title);
+				poiService.addEvent(event, poiName);
+			}	
+			else
+				throw new IllegalArgumentException("Ist kein Admin");
+		}
 		else
-			throw new IllegalArgumentException("Ist kein Admin");
+			throw new IllegalArgumentException("Kein PoI mit dem Namen gefunden");
+		
 		return event.getEventId();
 	}
 

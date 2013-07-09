@@ -29,8 +29,10 @@ public class InformationServiceImpl implements InformationService {
 	
 	@Override
 	@Transactional
-	public Event erstelleEvent(Long userId, String poiName, String title) {
+	public Event erstelleEvent(Long userId, String title) {
 		
+		
+		return null;	
 	}
 
 	@Override
