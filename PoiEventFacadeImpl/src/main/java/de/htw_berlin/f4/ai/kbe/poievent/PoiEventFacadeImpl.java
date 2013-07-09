@@ -14,14 +14,6 @@ import de.htw_berlin.f4.ai.kbe.poievent.Poi;
 import de.htw_berlin.f4.ai.kbe.poievent.PoiEventFacade;
 import de.htw_berlin.opentoken.ApplicationService.InformationService;
 import de.htw_berlin.opentoken.ApplicationService.PoiService;
-import de.htw_berlin.f4.ai.kbe.poievent.AuthorizationException;
-import de.htw_berlin.f4.ai.kbe.poievent.Coordinate;
-import de.htw_berlin.f4.ai.kbe.poievent.Event;
-import de.htw_berlin.f4.ai.kbe.poievent.Message;
-import de.htw_berlin.f4.ai.kbe.poievent.Poi;
-import de.htw_berlin.f4.ai.kbe.poievent.PoiEventFacade;
-import de.htw_berlin.opentoken.ApplicationService.InformationService;
-import de.htw_berlin.opentoken.ApplicationService.PoiService;
 import de.htw_berlin.opentoken.ApplicationService.UserService;
 
 

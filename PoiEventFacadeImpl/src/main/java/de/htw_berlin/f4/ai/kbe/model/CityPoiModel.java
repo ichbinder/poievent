@@ -2,9 +2,11 @@ package de.htw_berlin.f4.ai.kbe.model;
 
 import java.util.Set;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+@Entity
 public class CityPoiModel extends SimplePoiModel{
 
 	@Id 
