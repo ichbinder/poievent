@@ -77,12 +77,11 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 	}
 
 	public long createEvent(Long userId, String poiName, String title, String description) {
-		// TODO Auto-generated method stub
 		long eventId;
 		Event event;
 		if(poiService.getPoi(poiName) != null)
 		{	
-			if(hasAdminRole(userId))
+			if(userService.validateUser(userId))
 			{	
 				eventId = informationService.erstelleEvent(userId, title, description);
 				event = informationService.getEventByEventId(eventId);
@@ -98,22 +97,25 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 	}
 
 	public void deleteEvent(Long userId, Long eventId) {
-		// TODO Auto-generated method stub
-		if(hasAdminRole(userId))
+		if(informationService.validateEvent(eventId))
 		{	
-			if(userId == informationService.istBesitzerVon(eventId))	
+			if(userService.validateUser(userId))
 			{	
-				informationService.loescheEvent(eventId);
+				if(hasAdminRole(userId) || userId == informationService.istBesitzerVon(eventId))	
+				{	
+					informationService.loescheEvent(eventId);
+				}
+				else
+					throw new SecurityException("Hat den Event nicht angelegt oder ist kein Admin.");
 			}
 			else
-				throw new IllegalArgumentException("Hat Event nicht angelegt");
+				throw new IllegalArgumentException("Benutzer nicht gefunden");
 		}
 		else
-			throw new IllegalArgumentException("Ist kein Admin");
+			throw new IllegalArgumentException("Event nicht gefunden.");
 	}
 
 	public Set<Event> findEventsForPoi(String poiName) {
-		// TODO Auto-generated method stub
 		Set<Event> temp;
 		if(poiService.validatePoi(poiName))
 			temp = poiService.getAllEventsByPoi(poiName);
@@ -124,7 +126,6 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 	}
 
 	public void subscribeToEvent(Long userId, Long eventId) {
-		// TODO Auto-generated method stub
 		if(userService.validateUser(userId))
 		{
 			if(informationService.validateEvent(eventId))
@@ -137,7 +138,6 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 	}
 
 	public Set<Event> findSubscribedEvents(Long userId) {
-		// TODO Auto-generated method stub
 		Set<Event> temp;
 		if(userService.validateUser(userId))
 			temp = informationService.findSubscribedEventsBy(userId);
@@ -148,7 +148,6 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 	}
 
 	public Set<Event> findOwnedEvents(Long userId) {
-		// TODO Auto-generated method stub
 		Set<Event> temp;
 		if(userService.validateUser(userId))
 			temp = informationService.findOwnedEventsBy(userId);
@@ -159,7 +158,6 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 	}
 
 	public List<Message> getMessages(Long eventId) {
-		// TODO Auto-generated method stub
 		List<Message> temp;
 		if(informationService.validateEvent(eventId))
 			temp = informationService.getMessage(eventId);
@@ -169,7 +167,6 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 	}
 
 	public Long createUser(String name, String firstname, String email) {
-		// TODO Auto-generated method stub
 		if(userService.checkEmail(email))
 			return userService.createUser(name, firstname, email);
 		else
@@ -177,7 +174,7 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 	}
 
 	public void setAdminRole(Long userId) {
-		// TODO Auto-generated method stub
+
 		if(userService.validateUser(userId))
 			userService.setAdminRole(userId);
 		else
@@ -185,7 +182,6 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 	}
 
 	public boolean hasAdminRole(Long userId) {
-		// TODO Auto-generated method stub
 		if(userService.validateUser(userId))
 			return userService.validateAdmin(userId);
 		else
@@ -193,7 +189,6 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 	}
 
 	public void removeAdminRole(Long userId) {
-		// TODO Auto-generated method stub
 		if(userService.validateUser(userId))
 			userService.removeAdmin(userId);
 		else
@@ -201,7 +196,6 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 	}
 
 	public Long getUserId(String email) {
-		// TODO Auto-generated method stub
 		if(userService.validateEmail(email))
 			return userService.getUserByEmail(email);
 		else
@@ -209,7 +203,6 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 	}
 
 	public void deleteUser(Long userId) {
-		// TODO Auto-generated method stub
 		if(userService.validateUser(userId))
 			userService.deleteUserById(userId);
 		else
@@ -217,7 +210,6 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 	}
 
 	public void deleteUser(String email) {
-		// TODO Auto-generated method stub
 		if(userService.validateEmail(email))
 			userService.deleteUserByEmail(email);
 		else
@@ -226,7 +218,6 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 
 	public void addMessage(Long eventId, Long userId, String title,
 			String content) {
-		// TODO Auto-generated method stub
 		if(informationService.validateEvent(eventId))
 		{
 			if(informationService.isPartInEvent(eventId, userId))
