@@ -96,4 +96,10 @@ public class EventModel {
 	public List<MessageModel> getMessage(){
 		return messages;
 	}
+	public UserModel getCreatedBy() {
+		return createdBy;
+	}
+	public void setCreatedBy(UserModel createdBy) {
+		this.createdBy = createdBy;
+	}
 }

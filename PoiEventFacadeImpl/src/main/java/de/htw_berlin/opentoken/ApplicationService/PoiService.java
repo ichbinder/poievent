@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import de.htw_berlin.f4.ai.kbe.poievent.Coordinate;
+import de.htw_berlin.f4.ai.kbe.poievent.Event;
 import de.htw_berlin.f4.ai.kbe.poievent.Poi;
 
 public interface PoiService {
@@ -26,5 +27,9 @@ public interface PoiService {
 	public Set<Poi> getPoiByTag(String tag);
 
 	public Poi getPoi(String name);
+
+	void addEvent(Event event, String poiName);
+
+	boolean validatePoi(String name);
 
 }

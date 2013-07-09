@@ -1,6 +1,7 @@
 package de.htw_berlin.opentoken.ApplicationService;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import de.htw_berlin.f4.ai.kbe.model.CityPoiModel;
 import de.htw_berlin.f4.ai.kbe.model.CoordinateModel;
+import de.htw_berlin.f4.ai.kbe.model.EventModel;
 import de.htw_berlin.f4.ai.kbe.model.PoiModel;
 import de.htw_berlin.f4.ai.kbe.model.PolygonPoiModel;
 import de.htw_berlin.f4.ai.kbe.model.SimplePoiModel;
@@ -193,8 +195,27 @@ public class PoiServiceImpl implements PoiService {
 			return null;
 	}
 	
+	@Override
 	public void addEvent(Event event, String poiName) {
-		
+		if (poiRepository.findByName(poiName) != null) {
+			PoiModel poiModel = poiRepository.findByName(poiName);
+			Set<EventModel> eventModels = new HashSet<EventModel>();
+			eventModels.addAll(poiModel.getEvents());
+			EventModel eventModel = new EventModel(event.getTitle(), event.getDescription(), );
+			eventModels.add(eventModel);
+			poiModel.setEvents(eventModels);
+			poiRepository.saveAndFlush(poiModel);
+		} else 
+			throw new IllegalArgumentException("Poi existiert nicht.");
+	}
+	
+	@Override
+	public boolean validatePoi(String name) {
+		if (getPoi(name) != null) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public boolean geokoordinateOk(Float latitude, Float longitude) {
