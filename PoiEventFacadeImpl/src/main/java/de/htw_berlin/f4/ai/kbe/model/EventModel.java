@@ -7,7 +7,6 @@ import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -25,11 +24,17 @@ public class EventModel {
 	private Calendar date;
 	
 	@OneToOne
-	public UserModel createdBy;
+	private UserModel createdBy;
 	@ManyToMany
-	public Set<UserModel> subscribedBy;
+	private Set<UserModel> subscribedBy; //<--- Achtung bei der verknüpfung da muessen wir noch mal reden.
 	@OneToMany
-	publc List<MessageModel> messages;
+	private List<MessageModel> messages;
+
+	public Set<UserModel> subscribedBy; //<--- Achtung bei der verknüpfung da muessen wir noch mal reden.
+
+	@OneToMany
+	private PoiModel poi;
+
 	
 	public EventModel(String title,String description,UserModel createdBy)
 	{
