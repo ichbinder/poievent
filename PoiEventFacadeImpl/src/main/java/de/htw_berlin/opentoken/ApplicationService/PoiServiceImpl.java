@@ -1,6 +1,7 @@
 package de.htw_berlin.opentoken.ApplicationService;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -14,6 +15,7 @@ import de.htw_berlin.f4.ai.kbe.model.PolygonPoiModel;
 import de.htw_berlin.f4.ai.kbe.model.SimplePoiModel;
 import de.htw_berlin.f4.ai.kbe.model.UserModel;
 import de.htw_berlin.f4.ai.kbe.poievent.Coordinate;
+import de.htw_berlin.f4.ai.kbe.poievent.Event;
 import de.htw_berlin.f4.ai.kbe.poievent.Poi;
 import de.htw_berlin.f4.ai.kbe.springdatarepository.CityPoiRepository;
 import de.htw_berlin.f4.ai.kbe.springdatarepository.PoiRepository;
@@ -142,7 +144,18 @@ public class PoiServiceImpl implements PoiService {
 
 	@Override
 	public Set<Poi> getPoiByTag(String tag) {
-		// TODO Auto-generated method stub
+		/*List<PoiModel> poiModels = poiRepository.findAll();
+		Set<Poi> poiSet = new HashSet<Poi>();
+		for (int i = 0; i < poiModels.size(); i++) {
+			Set<String> tagsTmp = poiModels.get(i).getTags();
+			for (int j = 0; j < tagsTmp.size(); j++) {
+				if (tagsTmp.contains(tag)) {
+					
+					Poi poi = new 
+					poiSet.add(poiModels.get(i));
+				}
+			}
+		}*/
 		return null;
 	}
 
@@ -150,6 +163,10 @@ public class PoiServiceImpl implements PoiService {
 	public Poi getPoi(String name) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public void addEvent(Event event, String poiName) {
+		
 	}
 
 	public boolean geokoordinateOk(Float latitude, Float longitude) {
