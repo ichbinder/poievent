@@ -3,6 +3,7 @@ package de.htw_berlin.opentoken.ApplicationService;
 import java.util.List;
 import java.util.Set;
 
+import de.htw_berlin.f4.ai.kbe.model.UserModel;
 import de.htw_berlin.f4.ai.kbe.poievent.Coordinate;
 import de.htw_berlin.f4.ai.kbe.poievent.Event;
 import de.htw_berlin.f4.ai.kbe.poievent.Poi;
@@ -28,8 +29,8 @@ public interface PoiService {
 
 	public Poi getPoi(String name);
 
-	void addEvent(Event event, String poiName);
-
 	boolean validatePoi(String name);
+
+	void addEvent(Event event, UserModel createdBy, String poiName);
 
 }
