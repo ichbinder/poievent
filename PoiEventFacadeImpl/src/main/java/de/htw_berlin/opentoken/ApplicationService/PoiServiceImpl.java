@@ -1,7 +1,6 @@
 package de.htw_berlin.opentoken.ApplicationService;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -14,9 +13,12 @@ import de.htw_berlin.f4.ai.kbe.model.PoiModel;
 import de.htw_berlin.f4.ai.kbe.model.PolygonPoiModel;
 import de.htw_berlin.f4.ai.kbe.model.SimplePoiModel;
 import de.htw_berlin.f4.ai.kbe.model.UserModel;
+import de.htw_berlin.f4.ai.kbe.poievent.CityPoi;
 import de.htw_berlin.f4.ai.kbe.poievent.Coordinate;
 import de.htw_berlin.f4.ai.kbe.poievent.Event;
 import de.htw_berlin.f4.ai.kbe.poievent.Poi;
+import de.htw_berlin.f4.ai.kbe.poievent.PolygonPoi;
+import de.htw_berlin.f4.ai.kbe.poievent.SimplePoi;
 import de.htw_berlin.f4.ai.kbe.springdatarepository.CityPoiRepository;
 import de.htw_berlin.f4.ai.kbe.springdatarepository.PoiRepository;
 import de.htw_berlin.f4.ai.kbe.springdatarepository.PolygonPoiRepository;
@@ -108,11 +110,15 @@ public class PoiServiceImpl implements PoiService {
 			if (!tags.isEmpty()) {
 				if (!tags.contains(tag)) {
 					tags.add(tag);
+					poiModel.setTags(tags);
+					poiRepository.saveAndFlush(poiModel);
 				} else {
 					throw new IllegalArgumentException("Tag exsistiert schon.");
 				}
 			} else {
 				tags.add(tag);
+				poiModel.setTags(tags);
+				poiRepository.saveAndFlush(poiModel);
 			}
 		} else {
 			throw new IllegalArgumentException("Nutzer existiert nicht.");
@@ -128,6 +134,8 @@ public class PoiServiceImpl implements PoiService {
 				if (!tags.isEmpty()) {
 					if (tags.contains(tag)) {
 						tags.remove(tag);
+						poiModel.setTags(tags);
+						poiRepository.saveAndFlush(poiModel);
 					} else {
 						throw new IllegalArgumentException("Tag exsistiert nicht.");
 					}
@@ -161,8 +169,28 @@ public class PoiServiceImpl implements PoiService {
 
 	@Override
 	public Poi getPoi(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		if (simplePoiRepository.findByName(name) != null) {
+			SimplePoiModel simplePoiModel = simplePoiRepository.findByName(name);
+			SimplePoi simplePoi = new SimplePoi(simplePoiModel.getName(), simplePoiModel.getTags(), 
+					simplePoiModel.getLongitude(), simplePoiModel.getLatitude());
+			return simplePoi;
+		} else if (cityPoiRepository.findByName(name) != null) {
+			CityPoiModel cityPoiModel = cityPoiRepository.findByName(name);
+			CityPoi cityPoi = new CityPoi(cityPoiModel.getName(), cityPoiModel.getTags(), cityPoiModel.getStreet(), 
+					cityPoiModel.getCity(), cityPoiModel.getLatitude(), cityPoiModel.getLongitude());
+			return cityPoi;
+		} else if (polygonPoiRepository.findByName(name) != null) {
+			PolygonPoiModel polygonPoiModel = polygonPoiRepository.findByName(name);
+			List<Coordinate> coordinate = new ArrayList<Coordinate>();
+			for (int i = 0; i < polygonPoiModel.getPolygon().size(); i++) {
+				Coordinate coordinateTmp = new Coordinate(polygonPoiModel.getPolygon().get(i).getLatitude(), 
+						polygonPoiModel.getPolygon().get(i).getLongitude());
+				coordinate.add(coordinateTmp);
+			}
+			PolygonPoi polygonPoi = new PolygonPoi(polygonPoiModel.getName(), polygonPoiModel.getTags(), coordinate);
+			return polygonPoi;
+		} else
+			return null;
 	}
 	
 	public void addEvent(Event event, String poiName) {

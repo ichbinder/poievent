@@ -7,5 +7,6 @@ import de.htw_berlin.f4.ai.kbe.model.PolygonPoiModel;
 
 @Repository
 public interface PolygonPoiRepository extends JpaRepository<PolygonPoiModel, Long> {
-	
+
+	public PolygonPoiModel findByName(String name);
 }

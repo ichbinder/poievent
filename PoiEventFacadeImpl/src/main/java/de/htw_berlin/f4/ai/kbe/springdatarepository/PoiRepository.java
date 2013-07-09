@@ -11,5 +11,4 @@ public interface PoiRepository extends JpaRepository<PoiModel, Long> {
 	public PoiModel findByName(String name);
 	public PoiModel findByCreatedByAndName(Long userId, String name);
 	
-
 }

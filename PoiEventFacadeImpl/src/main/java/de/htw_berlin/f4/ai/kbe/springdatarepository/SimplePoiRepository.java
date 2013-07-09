@@ -8,4 +8,5 @@ import de.htw_berlin.f4.ai.kbe.model.SimplePoiModel;
 @Repository
 public interface SimplePoiRepository extends JpaRepository<SimplePoiModel, Long> {
 
+	public SimplePoiModel findByName(String name);
 }
