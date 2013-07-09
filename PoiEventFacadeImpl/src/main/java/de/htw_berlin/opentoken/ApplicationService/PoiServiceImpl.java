@@ -196,12 +196,12 @@ public class PoiServiceImpl implements PoiService {
 	}
 	
 	@Override
-	public void addEvent(Event event, String poiName) {
+	public void addEvent(Event event, UserModel createdBy, String poiName) {
 		if (poiRepository.findByName(poiName) != null) {
 			PoiModel poiModel = poiRepository.findByName(poiName);
 			Set<EventModel> eventModels = new HashSet<EventModel>();
 			eventModels.addAll(poiModel.getEvents());
-			EventModel eventModel = new EventModel(event.getTitle(), event.getDescription(), );
+			EventModel eventModel = new EventModel(event.getTitle(), event.getDescription(), createdBy);
 			eventModels.add(eventModel);
 			poiModel.setEvents(eventModels);
 			poiRepository.saveAndFlush(poiModel);
@@ -219,9 +219,24 @@ public class PoiServiceImpl implements PoiService {
 	}
 
 	public boolean geokoordinateOk(Float latitude, Float longitude) {
-		return true;
+		if (latitude > -90 && latitude < 90)
+			if (longitude > -180 && longitude < 180) 
+				return true;
+			else
+				return false;
+		else 
+			return false;
 	}
+	
 	public boolean geokoordinateOk(List<Coordinate> coordinates) {
-		return true;
+		int trueCount = 0;
+		for (int i = 0; i < coordinates.size(); i++) {
+			if (geokoordinateOk(coordinates.get(i).getLatitude(), coordinates.get(i).getLongitude()))
+				trueCount++;
+		}
+		if (trueCount == coordinates.size())
+			return true;
+		else
+			return false;
 	}
 }
