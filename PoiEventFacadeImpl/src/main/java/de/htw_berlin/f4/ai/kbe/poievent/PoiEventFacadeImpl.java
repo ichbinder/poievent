@@ -92,7 +92,7 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 		else
 			throw new IllegalArgumentException("Kein PoI mit dem Namen gefunden");
 		
-		return event.getEventId();
+		return //event.getEventId();
 	}
 
 	public void deleteEvent(Long userId, Long eventId) {

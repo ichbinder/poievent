@@ -1,5 +1,6 @@
 package de.htw_berlin.opentoken.ApplicationService;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -90,7 +91,6 @@ public class InformationServiceImpl implements InformationService {
 		for(EventModel i : eventModelList)
 		{	
 			tempEvent.setTitle(i.getTitle());
-			tempEvent.setEventId(i.getEventId());
 			tempEvent.setDate(i.getDate());
 			tempEvent.setDescription(i.getDescription());
 		
@@ -109,7 +109,6 @@ public class InformationServiceImpl implements InformationService {
 		for(EventModel i : eventModelList)
 		{	
 			tempEvent.setTitle(i.getTitle());
-			tempEvent.setEventId(i.getEventId());
 			tempEvent.setDate(i.getDate());
 			tempEvent.setDescription(i.getDescription());
 			
@@ -122,7 +121,7 @@ public class InformationServiceImpl implements InformationService {
 	@Transactional
 	public List<Message> getMessage(Long eventId) {
 		// TODO Auto-generated method stub
-		List<Message> temp = null;
+		List<Message> temp = new ArrayList<Message>();
 		List<MessageModel> tempModel;
 		Message buffer = new Message();
 		EventModel eventModel = eventRepository.findOne(eventId);
