@@ -33,4 +33,6 @@ public interface PoiService {
 
 	void addEvent(Event event, UserModel createdBy, String poiName);
 
+	Set<Event> getAllEventsByPoi(String poiName);
+
 }

@@ -218,6 +218,26 @@ public class PoiServiceImpl implements PoiService {
 		}
 	}
 
+	@Override
+	public Set<Event> getAllEventsByPoi(String poiName) {
+		Set<Event> events = new HashSet<Event>();
+		if (poiRepository.findByName(poiName) != null) {
+			PoiModel poiModel = poiRepository.findByName(poiName);
+			Set<EventModel> eventModels = new HashSet<EventModel>();
+			eventModels = poiModel.getEvents();
+			for (EventModel eventI : eventModels) {
+				Event event = new Event();
+				event.setTitle(eventI.getTitle());
+				event.setDescription(eventI.getDescription());
+				event.setDate(eventI.getDate());
+				events.add(event);
+			}
+			
+		} else
+			throw new IllegalArgumentException("Poi existiert nicht.");
+		return events;
+	}
+	
 	public boolean geokoordinateOk(Float latitude, Float longitude) {
 		if (latitude > -90 && latitude < 90)
 			if (longitude > -180 && longitude < 180) 

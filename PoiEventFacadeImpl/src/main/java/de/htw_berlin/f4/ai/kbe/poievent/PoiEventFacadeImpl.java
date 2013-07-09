@@ -116,7 +116,7 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 		// TODO Auto-generated method stub
 		Set<Event> temp;
 		if(poiService.validatePoi(poiName))
-			temp = poiService.erstellePoiListe(poiName);
+			temp = poiService.getAllEventsByPoi(poiName);
 		else
 			throw new IllegalArgumentException("POI nicht gefunden");
 		
