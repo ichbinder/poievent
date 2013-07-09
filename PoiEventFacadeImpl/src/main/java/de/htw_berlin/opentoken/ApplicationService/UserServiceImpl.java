@@ -32,19 +32,23 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		UserModel user = userRepository.findOne(userId);
 		user.setAdmin(true);
-		
+		userRepository.saveAndFlush(user);
 	}
 
 	@Override
 	public boolean validateAdmin(Long userId) {
 		// TODO Auto-generated method stub
-		return false;
+		UserModel user = userRepository.findOne(userId);
+		
+		return user.getAdmin();
 	}
 
 	@Override
 	public void removeAdmin(Long userId) {
 		// TODO Auto-generated method stub
-		
+		UserModel user = userRepository.findOne(userId);
+		user.setAdmin(false);
+		userRepository.saveAndFlush(user);
 	}
 
 	@Override

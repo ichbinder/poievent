@@ -1,10 +1,12 @@
 package de.htw_berlin.f4.ai.kbe.model;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
 @Entity 
@@ -23,6 +25,12 @@ public class UserModel implements Serializable {
 	private String email;
 	
 	private Boolean admin;
+	
+	@OneToOne
+	private EventModel createdEvent;
+	
+	@ManyToMany
+	private Set<EventModel> event;
 	
 	@OneToOne
 	private PoiModel poi;

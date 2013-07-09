@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 @Entity
 public class MessageModel {
@@ -15,6 +14,9 @@ public class MessageModel {
 	
 	private String title;
 	private String content;
+	
+	@ManyToOne
+	private EventModel event;
 	
 	public MessageModel(String title, String content)
 	{
