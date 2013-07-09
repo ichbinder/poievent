@@ -78,12 +78,14 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 
 	public long createEvent(Long userId, String poiName, String title, String description) {
 		// TODO Auto-generated method stub
+		long eventId;
 		Event event;
 		if(poiService.getPoi(poiName) != null)
 		{	
 			if(hasAdminRole(userId))
 			{	
-				event = informationService.erstelleEvent(userId, title, description);
+				eventId = informationService.erstelleEvent(userId, title, description);
+				event = informationService.getEventByEventId(eventId);
 				poiService.addEvent(event,userService.getUserById(userId), poiName);
 			}	
 			else
@@ -92,7 +94,7 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 		else
 			throw new IllegalArgumentException("Kein PoI mit dem Namen gefunden");
 		
-		return //event.getEventId();
+		return eventId;
 	}
 
 	public void deleteEvent(Long userId, Long eventId) {

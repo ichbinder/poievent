@@ -7,8 +7,10 @@ import de.htw_berlin.f4.ai.kbe.poievent.Event;
 import de.htw_berlin.f4.ai.kbe.poievent.Message;
 
 public interface InformationService {
+	
+	Event getEventByEventId(Long eventId);
 
-	Event erstelleEvent(Long userId, String title, String description);
+	long erstelleEvent(Long userId, String title, String description);
 
 	Long istBesitzerVon(Long userId);
 
