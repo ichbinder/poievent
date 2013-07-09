@@ -43,11 +43,14 @@ public class EventModel {
 		this.title = title;
 		this.description = description;
 		this.createdBy = createdBy;
-		this.date = null;
+		this.date = Calendar.getInstance();
 	}
 	public EventModel(UserModel createdBy)
 	{
 		this.createdBy = createdBy;
+		this.date = Calendar.getInstance();
+		this.title = "";
+		this.description = "";
 	}
 	public UserModel getOwner()
 	{

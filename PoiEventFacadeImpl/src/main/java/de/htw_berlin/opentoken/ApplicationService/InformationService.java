@@ -8,13 +8,11 @@ import de.htw_berlin.f4.ai.kbe.poievent.Message;
 
 public interface InformationService {
 
-	Event erstelleEvent(Long userId, String title);
+	Event erstelleEvent(Long userId, String title, String description);
 
 	Long istBesitzerVon(Long userId);
 
 	void loescheEvent(Long eventId);
-
-	Set<Event> erstellePoiListe(String poiName);
 
 	boolean validateEvent(Long eventId);
 

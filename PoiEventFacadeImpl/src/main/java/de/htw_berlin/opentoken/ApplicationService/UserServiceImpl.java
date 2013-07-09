@@ -2,6 +2,7 @@ package de.htw_berlin.opentoken.ApplicationService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.htw_berlin.f4.ai.kbe.model.UserModel;
 import de.htw_berlin.f4.ai.kbe.springdatarepository.UserRepository;
@@ -13,12 +14,14 @@ public class UserServiceImpl implements UserService {
 	UserRepository userRepository;
 	
 	@Override
+	@Transactional
 	public boolean validateUser(Long userId) {
 		// TODO Auto-generated method stub		
 		return userRepository.exists(userId);
 	}
 
 	@Override
+	@Transactional
 	public long createUser(String name, String firstname, String email) {
 		// TODO Auto-generated method stub
 		UserModel user = new UserModel(name, firstname, email);
@@ -28,6 +31,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional
 	public void setAdminRole(Long userId) {
 		// TODO Auto-generated method stub
 		UserModel user = userRepository.findOne(userId);
@@ -36,6 +40,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional
 	public boolean validateAdmin(Long userId) {
 		// TODO Auto-generated method stub
 		UserModel user = userRepository.findOne(userId);
@@ -44,6 +49,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional
 	public void removeAdmin(Long userId) {
 		// TODO Auto-generated method stub
 		UserModel user = userRepository.findOne(userId);
@@ -52,33 +58,45 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional
 	public Long getUserByEmail(String email) {
 		// TODO Auto-generated method stub
-		return null;
+		UserModel user = userRepository.findByEmail(email);
+		
+		return user.getUserId();
 	}
 
 	@Override
+	@Transactional
 	public void deleteUserById(Long userId) {
 		// TODO Auto-generated method stub
-		
+		userRepository.delete(userRepository.findOne(userId));
 	}
 
 	@Override
+	@Transactional
 	public void deleteUserByEmail(String email) {
 		// TODO Auto-generated method stub
-		
+		userRepository.delete(userRepository.findByEmail(email));
 	}
 
 	@Override
+	@Transactional
 	public boolean validateEmail(String email) {
 		// TODO Auto-generated method stub
-		return false;
+		boolean checkValue = false;
+		if(userRepository.findByEmail(email) != null)
+			checkValue = true;
+		return checkValue;
 	}
 
 	@Override
+	@Transactional
 	public boolean checkEmail(String email) {
 		// TODO Auto-generated method stub
-		return false;
+		boolean checkValue = false;
+		if(userRepository.findByEmail(email) != null)
+			checkValue = true;
+		return checkValue;
 	}
-
 }

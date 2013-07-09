@@ -29,10 +29,16 @@ public class InformationServiceImpl implements InformationService {
 	
 	@Override
 	@Transactional
-	public Event erstelleEvent(Long userId, String title) {
+	public Event erstelleEvent(Long userId, String title, String description) {
+		EventModel eventModel = new EventModel(title, description,userRepository.findOne(userId));
+		eventRepository.saveAndFlush(eventModel);
+
+		Event event = new Event();
+		event.setTitle(title);
+		event.setDescription(description);
+		event.setDate(eventModel.getDate());
 		
-		
-		return null;	
+		return event;	
 	}
 
 	@Override
@@ -49,15 +55,6 @@ public class InformationServiceImpl implements InformationService {
 	public void loescheEvent(Long eventId) {
 		// TODO Auto-generated method stub
 		eventRepository.delete(eventId);
-	}
-
-	@Override
-	@Transactional
-	public Set<Event> erstellePoiListe(String poiName) {
-		// TODO Auto-generated method stub
-		Set<Event> temp;
-		
-		return null;
 	}
 
 	@Override
@@ -166,5 +163,4 @@ public class InformationServiceImpl implements InformationService {
 		eventModel.addMessage(messageModel);
 		eventRepository.saveAndFlush(eventModel);
 	}
-
 }
