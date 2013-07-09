@@ -26,9 +26,11 @@ public class EventModel {
 	@OneToOne
 	private UserModel createdBy;
 	@ManyToMany
-	private Set<UserModel> subscribedBy;
+	private Set<UserModel> subscribedBy; <--- Achtung bei der verknüpfung da muessen wir noch mal reden.
 	@OneToMany
 	private Set<MessageModel> messages;
+	@OneToMany
+	private PoiModel poi;
 	
 	public EventModel(String title,String description,UserModel createdBy)
 	{
