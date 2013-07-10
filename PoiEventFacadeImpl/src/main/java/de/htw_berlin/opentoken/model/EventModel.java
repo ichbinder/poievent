@@ -1,5 +1,6 @@
 package de.htw_berlin.opentoken.model;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
@@ -13,7 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
-public class EventModel {
+public class EventModel implements Serializable{
 
 	@Id 
 	@GeneratedValue 

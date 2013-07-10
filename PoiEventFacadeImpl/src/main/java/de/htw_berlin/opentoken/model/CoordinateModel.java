@@ -1,12 +1,14 @@
 package de.htw_berlin.opentoken.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class CoordinateModel {
+public class CoordinateModel implements Serializable{
 
 	@Id 
 	@GeneratedValue 
