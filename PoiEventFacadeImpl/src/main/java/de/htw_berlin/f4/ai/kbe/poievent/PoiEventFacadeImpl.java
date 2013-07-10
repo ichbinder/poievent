@@ -173,7 +173,7 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 	}
 
 	public Long createUser(String name, String firstname, String email) {
-		if(userService.checkEmail(email))
+		if(!userService.checkEmail(email))
 			return userService.createUser(name, firstname, email);
 		else
 			throw new IllegalArgumentException("Email schon vergeben");

@@ -95,14 +95,10 @@ public class UserServiceImpl implements UserService {
 	public boolean checkEmail(String email) {
 		// TODO Auto-generated method stub
 		boolean checkValue = false;
-		if(userRepository.count() != 0) {
-			System.out.println("error " + userRepository.count());
-			if(userRepository.findByEmail(email) != null) {
-				checkValue = true;
-				System.out.println("error2");
-			}
-		} else
+		
+		if(userRepository.findByEmail(email) != null) 
 			checkValue = true;
+		
 		return checkValue;
 	}
 
