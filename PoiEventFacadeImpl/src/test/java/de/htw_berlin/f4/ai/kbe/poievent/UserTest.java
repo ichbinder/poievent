@@ -10,12 +10,10 @@ public class UserTest extends TestInit{
 	public void testRoles() {
 		long id = poiEvent.createUser("admin", "ober", "admin@htw-berlin.de");
 		assertFalse(poiEvent.hasAdminRole(id));
-		long id2 = poiEvent.createUser("admin2", "ober2", "admin2@htw-berlin.de");
-		assertFalse(poiEvent.hasAdminRole(id2));
-		/*poiEvent.setAdminRole(id);
+		poiEvent.setAdminRole(id);
 		assertTrue(poiEvent.hasAdminRole(id));
 		poiEvent.removeAdminRole(id);
 		assertFalse(poiEvent.hasAdminRole(id));
-		poiEvent.deleteUser(id);*/
+		poiEvent.deleteUser(id);
 	}	
 }

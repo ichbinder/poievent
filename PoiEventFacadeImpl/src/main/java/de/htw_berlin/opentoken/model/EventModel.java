@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -26,7 +28,8 @@ public class EventModel implements Serializable{
 	
 	private Calendar date;
 	
-	@OneToOne(mappedBy="createdEvent")
+	@OneToOne(mappedBy="createdEvent")//(fetch=FetchType.LAZY)
+	//@JoinColumn(name="ADDRESS_ID")
 	private UserModel createdBy;
 	
 	@ManyToMany(mappedBy="event")
@@ -38,6 +41,9 @@ public class EventModel implements Serializable{
 	@ManyToOne
 	private PoiModel poi;
 
+	public EventModel() {
+		// TODO Auto-generated constructor stub
+	}
 	
 	public EventModel(String title,String description,UserModel createdBy)
 	{

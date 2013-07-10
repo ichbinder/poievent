@@ -19,7 +19,7 @@ public class PolygonPoiModel extends PoiModel {
 		super();
 	}
 	
-	public PolygonPoiModel(String name, Set<String> tags, UserModel createdBy, List<CoordinateModel> polygon){
+	public PolygonPoiModel(String name, Set<TagModel> tags, UserModel createdBy, List<CoordinateModel> polygon){
 		this.name =name;
 		this.tags = tags;
 		this.createdBy = createdBy;

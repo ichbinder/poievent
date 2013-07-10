@@ -16,7 +16,7 @@ public class SimplePoiModel extends PoiModel {
 	public SimplePoiModel(){
 	}
 	
-	public SimplePoiModel(String name, Set<String> tags, UserModel createdBy, Float longitude, Float latitude){
+	public SimplePoiModel(String name, Set<TagModel> tags, UserModel createdBy, Float longitude, Float latitude){
 		this.name = name;
 		this.tags = tags;
 		this.createdBy = createdBy;

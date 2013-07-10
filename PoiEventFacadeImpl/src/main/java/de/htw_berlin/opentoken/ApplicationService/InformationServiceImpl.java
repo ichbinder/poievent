@@ -42,7 +42,6 @@ public class InformationServiceImpl implements InformationService {
 	public Long istBesitzerVon(Long eventId) {
 		// TODO Auto-generated method stub
 		EventModel eventModel = eventRepository.findOne(eventId);
-
 		return eventModel.getOwner().getUserId();
 	}
 

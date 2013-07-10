@@ -26,8 +26,8 @@ public abstract class PoiModel implements Serializable{
 	
 	protected String name;
 	
-	@ElementCollection
-	protected Set<String> tags;
+	@OneToMany(mappedBy="poi")
+	protected Set<TagModel> tags;
 	
 	@OneToMany(mappedBy="poi")
 	protected Set<EventModel> events;
@@ -40,11 +40,11 @@ public abstract class PoiModel implements Serializable{
 		this.name = name;
 	}
 	
-	public Set<String> getTags() {
+	public Set<TagModel> getTags() {
 		return tags;
 	}
 	
-	public void setTags(Set<String> tags) {
+	public void setTags(Set<TagModel> tags) {
 		this.tags = tags;
 	}
 

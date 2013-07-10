@@ -12,8 +12,6 @@ public interface InformationService {
 
 	long erstelleEvent(Long userId, String title, String description);
 
-	Long istBesitzerVon(Long userId);
-
 	void loescheEvent(Long eventId);
 
 	boolean validateEvent(Long eventId);
@@ -29,5 +27,7 @@ public interface InformationService {
 	boolean isPartInEvent(Long eventId, Long userId);
 
 	void addMessage(Long eventId, String title, String content);
+
+	Long istBesitzerVon(Long eventId);
 
 }

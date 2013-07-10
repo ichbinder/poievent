@@ -30,34 +30,22 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 	
 	public void createSimplePOI(Long userId, String name, Set<String> tags,
 			Float latitude, Float longitude) {
-		if(hasAdminRole(userId))
-			poiService.createSimplePOI(userId, name, tags, latitude, longitude);
-		else
-			throw new AuthorizationException(userId);
+		poiService.createSimplePOI(userId, name, tags, latitude, longitude);
 	}
 
 	public void createCityPOI(Long userId, String name, Set<String> tags,
 			String street, String city, Float latitude, Float longitude)
 			throws AuthorizationException {
-		if(hasAdminRole(userId))
-			poiService.createCityPOI(userId, name, tags, street, city, latitude, longitude);
-		else
-			throw new AuthorizationException(userId);
+		poiService.createCityPOI(userId, name, tags, street, city, latitude, longitude);
 	}
 
 	public void createPolygonPOI(Long userId, String name, Set<String> tags,
 			List<Coordinate> polygon) {
-		if(hasAdminRole(userId))
-			poiService.createPolygonPOI(userId, name, tags, polygon);
-		else
-			throw new AuthorizationException(userId);
+		poiService.createPolygonPOI(userId, name, tags, polygon);
 	}
 
 	public void deletePOI(Long userId, String name) {
-		if(hasAdminRole(userId))
-			poiService.deletePOI(userId, name);
-		else
-			throw new AuthorizationException(userId);
+		poiService.deletePOI(userId, name);
 	}
 
 	public void addPoiTag(Long userId, String name, String tag) {
@@ -79,7 +67,7 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 	}
 
 	public Poi getPoi(String name) {
-		return getPoi(name);
+		return poiService.getPoi(name);
 	}
 
 	public long createEvent(Long userId, String poiName, String title, String description) {
@@ -107,7 +95,7 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 		{	
 			if(userService.validateUser(userId))
 			{	
-				if(hasAdminRole(userId) || userId == informationService.istBesitzerVon(eventId))	
+				if(hasAdminRole(userId) /*|| userId == informationService.istBesitzerVon(eventId)*/) // <- NullPointerExaption	?
 				{	
 					informationService.loescheEvent(eventId);
 				}

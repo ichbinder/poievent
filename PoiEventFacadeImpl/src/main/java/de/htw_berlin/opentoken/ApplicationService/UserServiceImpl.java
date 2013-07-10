@@ -17,7 +17,10 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public boolean validateUser(Long userId) {
 		// TODO Auto-generated method stub		
-		return userRepository.exists(userId);
+		if (userRepository.findOne(userId) != null)
+			return true;
+		else
+			return false;
 	}
 
 	@Override
