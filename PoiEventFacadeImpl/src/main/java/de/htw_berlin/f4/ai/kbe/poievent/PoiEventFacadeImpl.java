@@ -4,6 +4,7 @@ package de.htw_berlin.f4.ai.kbe.poievent;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import de.htw_berlin.f4.ai.kbe.poievent.AuthorizationException;
@@ -19,6 +20,7 @@ import de.htw_berlin.opentoken.ApplicationService.UserService;
 
 public class PoiEventFacadeImpl implements PoiEventFacade{
 
+	private final static Logger log = Logger.getLogger(PoiEventFacadeImpl.class);
 	
 	@Autowired
 	UserService userService;

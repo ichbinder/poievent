@@ -5,6 +5,7 @@
 
 	<groupId>de.htw_berlin.opentoken</groupId>
 	<artifactId>PoiEventFacadeImpl</artifactId>
+	<packaging>jar</packaging>
 	<version>0.0.4</version>
 	<name>PoiEventFacadeImpl</name>
 
@@ -184,29 +185,22 @@
 
 	</dependencies>
 
-	 <build>
-	    <plugins>
-	      <plugin>
-	        <groupId>org.apache.maven.plugins</groupId>
-	        <artifactId>maven-shade-plugin</artifactId>
-	        <version>1.6</version>
-	        <executions>
-	          <execution>
-	            <phase>package</phase>
-	            <goals>
-	              <goal>shade</goal>
-	            </goals>
-	            <configuration>
-	              <transformers>
-	                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-	                  <mainClass>de.htw_berlin.f4.ai.kbe.poievent.PoiEventFacadeImpl</mainClass>
-	                </transformer>
-	              </transformers>
-	            </configuration>
-	          </execution>
-	        </executions>
-	      </plugin>
-	    </plugins>
-	  </build>
+	<build>
+	  <plugins>
+	    <plugin>
+	      <artifactId>maven-assembly-plugin</artifactId>
+	      <configuration>
+	        <archive>
+	          <manifest>
+	            <mainClass>fully.qualified.MainClass</mainClass>
+	          </manifest>
+	        </archive>
+	        <descriptorRefs>
+	          <descriptorRef>jar-with-dependencies</descriptorRef>
+	        </descriptorRefs>
+	      </configuration>
+	    </plugin>
+	  </plugins>
+	</build>
 
 </project>
