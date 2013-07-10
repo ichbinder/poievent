@@ -1,4 +1,4 @@
-package de.htw_berlin.f4.ai.kbe.model;
+package de.htw_berlin.opentoken.model;
 
 import java.util.Calendar;
 import java.util.List;

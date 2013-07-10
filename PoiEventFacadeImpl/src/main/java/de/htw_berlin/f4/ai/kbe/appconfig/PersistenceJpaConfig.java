@@ -25,6 +25,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /* fuer autowiring */
 @ComponentScan("de.htw_berlin.opentoken")
+//@ComponentScan("de.htw_berlin.f4.ai.kbe.model")
 /* erlaubt @Transactional */
 @EnableTransactionManagement
 
@@ -32,7 +33,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @PropertySource("classpath:META-INF/database.properties")
 
 /* spring data repositories */
-@EnableJpaRepositories("de.htw_berlin.f4.ai.kbe.springdatarepository")
+@EnableJpaRepositories("de.htw_berlin.opentoken.springdatarepository")
 
 @Configuration
 public class PersistenceJpaConfig {

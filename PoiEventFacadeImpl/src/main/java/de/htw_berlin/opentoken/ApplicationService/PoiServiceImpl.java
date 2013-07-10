@@ -8,24 +8,24 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import de.htw_berlin.f4.ai.kbe.model.CityPoiModel;
-import de.htw_berlin.f4.ai.kbe.model.CoordinateModel;
-import de.htw_berlin.f4.ai.kbe.model.EventModel;
-import de.htw_berlin.f4.ai.kbe.model.PoiModel;
-import de.htw_berlin.f4.ai.kbe.model.PolygonPoiModel;
-import de.htw_berlin.f4.ai.kbe.model.SimplePoiModel;
-import de.htw_berlin.f4.ai.kbe.model.UserModel;
 import de.htw_berlin.f4.ai.kbe.poievent.CityPoi;
 import de.htw_berlin.f4.ai.kbe.poievent.Coordinate;
 import de.htw_berlin.f4.ai.kbe.poievent.Event;
 import de.htw_berlin.f4.ai.kbe.poievent.Poi;
 import de.htw_berlin.f4.ai.kbe.poievent.PolygonPoi;
 import de.htw_berlin.f4.ai.kbe.poievent.SimplePoi;
-import de.htw_berlin.f4.ai.kbe.springdatarepository.CityPoiRepository;
-import de.htw_berlin.f4.ai.kbe.springdatarepository.PoiRepository;
-import de.htw_berlin.f4.ai.kbe.springdatarepository.PolygonPoiRepository;
-import de.htw_berlin.f4.ai.kbe.springdatarepository.SimplePoiRepository;
-import de.htw_berlin.f4.ai.kbe.springdatarepository.UserRepository;
+import de.htw_berlin.opentoken.model.CityPoiModel;
+import de.htw_berlin.opentoken.model.CoordinateModel;
+import de.htw_berlin.opentoken.model.EventModel;
+import de.htw_berlin.opentoken.model.PoiModel;
+import de.htw_berlin.opentoken.model.PolygonPoiModel;
+import de.htw_berlin.opentoken.model.SimplePoiModel;
+import de.htw_berlin.opentoken.model.UserModel;
+import de.htw_berlin.opentoken.springdatarepository.CityPoiRepository;
+import de.htw_berlin.opentoken.springdatarepository.PoiRepository;
+import de.htw_berlin.opentoken.springdatarepository.PolygonPoiRepository;
+import de.htw_berlin.opentoken.springdatarepository.SimplePoiRepository;
+import de.htw_berlin.opentoken.springdatarepository.UserRepository;
 
 @Service
 public class PoiServiceImpl implements PoiService {

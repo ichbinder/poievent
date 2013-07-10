@@ -1,17 +1,13 @@
-package de.htw_berlin.f4.ai.kbe.model;
+package de.htw_berlin.opentoken.model;
 
 import java.util.Set;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 
 @Entity
-public class CityPoiModel extends SimplePoiModel{
-
-	@Id 
-	@GeneratedValue 
-	Long cityPoiId;
+@DiscriminatorValue("CityPoiModel")
+public class CityPoiModel extends SimplePoiModel {
 	
 	private String street;
 	

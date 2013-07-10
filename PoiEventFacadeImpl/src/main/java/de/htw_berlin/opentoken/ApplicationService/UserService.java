@@ -1,6 +1,6 @@
 package de.htw_berlin.opentoken.ApplicationService;
 
-import de.htw_berlin.f4.ai.kbe.model.UserModel;
+import de.htw_berlin.opentoken.model.UserModel;
 
 public interface UserService {
 

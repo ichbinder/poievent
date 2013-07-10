@@ -1,9 +1,9 @@
-package de.htw_berlin.f4.ai.kbe.model;
+package de.htw_berlin.opentoken.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class CoordinateModel {
@@ -16,7 +16,7 @@ public class CoordinateModel {
 	
 	private float longitude;
 	
-	@OneToOne
+	@ManyToOne
 	private PolygonPoiModel polygonPoi;
 	
 	public CoordinateModel(float latitute, float longitude) {

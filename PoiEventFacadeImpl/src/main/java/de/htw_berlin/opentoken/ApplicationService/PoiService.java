@@ -3,10 +3,10 @@ package de.htw_berlin.opentoken.ApplicationService;
 import java.util.List;
 import java.util.Set;
 
-import de.htw_berlin.f4.ai.kbe.model.UserModel;
 import de.htw_berlin.f4.ai.kbe.poievent.Coordinate;
 import de.htw_berlin.f4.ai.kbe.poievent.Event;
 import de.htw_berlin.f4.ai.kbe.poievent.Poi;
+import de.htw_berlin.opentoken.model.UserModel;
 
 public interface PoiService {
 

@@ -1,7 +1,9 @@
-package de.htw_berlin.f4.ai.kbe.model;
+package de.htw_berlin.opentoken.model;
 
+import java.io.Serializable;
 import java.util.Set;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -10,9 +12,10 @@ import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+
 @Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-public abstract class PoiModel {
+public abstract class PoiModel implements Serializable{
 	
 	@Id 
 	@GeneratedValue 
@@ -23,6 +26,7 @@ public abstract class PoiModel {
 	
 	protected String name;
 	
+	@ElementCollection
 	protected Set<String> tags;
 	
 	@OneToMany(mappedBy="poi")

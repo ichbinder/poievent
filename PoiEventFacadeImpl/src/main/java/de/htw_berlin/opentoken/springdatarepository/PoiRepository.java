@@ -1,9 +1,9 @@
-package de.htw_berlin.f4.ai.kbe.springdatarepository;
+package de.htw_berlin.opentoken.springdatarepository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import de.htw_berlin.f4.ai.kbe.model.PoiModel;
+import de.htw_berlin.opentoken.model.PoiModel;
 
 @Repository
 public interface PoiRepository extends JpaRepository<PoiModel, Long> {

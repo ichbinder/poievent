@@ -1,4 +1,4 @@
-package de.htw_berlin.f4.ai.kbe.model;
+package de.htw_berlin.opentoken.model;
 
 import java.util.Set;
 
@@ -6,7 +6,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
-@DiscriminatorValue(value="SimplePoi")
+@DiscriminatorValue(value="SimplePoiModel")
 public class SimplePoiModel extends PoiModel {
 
 	private Float latitude;

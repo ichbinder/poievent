@@ -9,14 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import de.htw_berlin.f4.ai.kbe.model.EventModel;
-import de.htw_berlin.f4.ai.kbe.model.MessageModel;
-import de.htw_berlin.f4.ai.kbe.model.UserModel;
 import de.htw_berlin.f4.ai.kbe.poievent.Event;
 import de.htw_berlin.f4.ai.kbe.poievent.Message;
-import de.htw_berlin.f4.ai.kbe.springdatarepository.EventRepository;
-import de.htw_berlin.f4.ai.kbe.springdatarepository.PoiRepository;
-import de.htw_berlin.f4.ai.kbe.springdatarepository.UserRepository;
+import de.htw_berlin.opentoken.model.EventModel;
+import de.htw_berlin.opentoken.model.MessageModel;
+import de.htw_berlin.opentoken.model.UserModel;
+import de.htw_berlin.opentoken.springdatarepository.EventRepository;
+import de.htw_berlin.opentoken.springdatarepository.PoiRepository;
+import de.htw_berlin.opentoken.springdatarepository.UserRepository;
 
 @Service
 public class InformationServiceImpl implements InformationService {

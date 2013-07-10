@@ -1,4 +1,4 @@
-package de.htw_berlin.f4.ai.kbe.model;
+package de.htw_berlin.opentoken.model;
 
 import java.io.Serializable;
 import java.util.Set;
@@ -11,8 +11,6 @@ import javax.persistence.OneToOne;
 
 @Entity 
 public class UserModel implements Serializable {
-	
-	private static final long serialVersionUID = 1L;
 
 	@Id 
 	@GeneratedValue 

@@ -1,17 +1,18 @@
-package de.htw_berlin.f4.ai.kbe.model;
+package de.htw_berlin.opentoken.model;
 
 import java.util.List;
 import java.util.Set;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
-@DiscriminatorValue(value="PolygonPoi")
+@DiscriminatorValue(value="PolygonPoiModel")
 public class PolygonPoiModel extends PoiModel {
 	
-	@OneToOne(mappedBy="polygonPoi")
+	@OneToMany(mappedBy="polygonPoi")
 	private List<CoordinateModel> polygon;
 
 	public PolygonPoiModel(){	

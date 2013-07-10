@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Import;
 
 
 
-@ComponentScan("de.htw_berlin.aStudent")
+@ComponentScan("de.htw_berlin.opentoken")
 @Import(PersistenceJpaConfig.class)
 @Configuration
 public class AppConfig {

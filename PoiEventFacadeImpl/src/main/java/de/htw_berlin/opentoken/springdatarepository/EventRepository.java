@@ -1,4 +1,4 @@
-package de.htw_berlin.f4.ai.kbe.springdatarepository;
+package de.htw_berlin.opentoken.springdatarepository;
 
 import java.util.Set;
 
@@ -6,8 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import de.htw_berlin.f4.ai.kbe.model.EventModel;
-import de.htw_berlin.f4.ai.kbe.model.UserModel;
+import de.htw_berlin.opentoken.model.EventModel;
+import de.htw_berlin.opentoken.model.UserModel;
 
 @Repository
 public interface EventRepository extends JpaRepository<EventModel, Long> {

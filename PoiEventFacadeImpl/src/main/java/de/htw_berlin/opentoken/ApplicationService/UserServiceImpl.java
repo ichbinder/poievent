@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import de.htw_berlin.f4.ai.kbe.model.UserModel;
-import de.htw_berlin.f4.ai.kbe.springdatarepository.UserRepository;
+import de.htw_berlin.opentoken.model.UserModel;
+import de.htw_berlin.opentoken.springdatarepository.UserRepository;
 
 @Service
 public class UserServiceImpl implements UserService {
