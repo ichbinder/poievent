@@ -5,6 +5,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+import org.postgresql.translation.messages_de;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +36,8 @@ import de.htw_berlin.opentoken.springdatarepository.UserRepository;
 
 @Service
 public class PoiServiceImpl implements PoiService {
+
+	static final Logger logger = Logger.getLogger(PoiServiceImpl.class);
 
 	@Autowired
 	PoiRepository poiRepository;
@@ -62,6 +68,8 @@ public class PoiServiceImpl implements PoiService {
 						simplePoiRepository.saveAndFlush(simplePoiModel);
 					} else {
 						throw new IllegalArgumentException("Geokoordinaten liegen nicht im Bereich.");
+						//logger.debug("Sample debug message"); <- geht nicht weiss nicht warum
+						logger.warn("hallo");
 					}
 				} else {
 					throw new AuthorizationException(userId);

@@ -5,7 +5,6 @@
 
 	<groupId>de.htw_berlin.opentoken</groupId>
 	<artifactId>PoiEventFacadeImpl</artifactId>
-	<packaging>jar</packaging>
 	<version>0.0.4</version>
 	<name>PoiEventFacadeImpl</name>
 
@@ -37,18 +36,11 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!--<dependency>
+		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>1.2.17</version>
-		</dependency-->
-		
-		<dependency>
-  			<groupId>org.slf4j</groupId>
-  			<artifactId>slf4j-api</artifactId>
-  			<version>1.7.1</version>
 		</dependency>
-		
 
 		<!-- Spring Framework -->
 		<dependency>
@@ -68,25 +60,6 @@
 					<artifactId>commons-logging</artifactId>
 				</exclusion>
 			</exclusions>
-		</dependency>
-		<dependency>
-  			<groupId>org.slf4j</groupId>
-  			<artifactId>jcl-over-slf4j</artifactId>
-  			<version>1.7.1</version>
-  			<scope>runtime</scope>
-		</dependency>
-		
-		<dependency>
-		   <groupId>org.slf4j</groupId>
-		   <artifactId>slf4j-log4j12</artifactId>
-		   <version>1.7.1</version>
-		   <scope>runtime</scope>
-		</dependency>
-		<dependency>
-		  	<groupId>log4j</groupId>
-		  	<artifactId>log4j</artifactId>
-		  	<version>1.2.17</version>
-		  	<scope>runtime</scope>
 		</dependency>
 
 		<dependency>
@@ -185,22 +158,49 @@
 
 	</dependencies>
 
+	
 	<build>
-	  <plugins>
-	    <plugin>
-	      <artifactId>maven-assembly-plugin</artifactId>
-	      <configuration>
-	        <archive>
-	          <manifest>
-	            <mainClass>fully.qualified.MainClass</mainClass>
-	          </manifest>
-	        </archive>
-	        <descriptorRefs>
-	          <descriptorRef>jar-with-dependencies</descriptorRef>
-	        </descriptorRefs>
-	      </configuration>
-	    </plugin>
-	  </plugins>
+		<plugins>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.3</version>
+				<configuration>
+
+					<archive>
+						<manifest>
+							<mainClass>de.htw_berlin.f4.ai.kbe.artikelapp.App</mainClass>
+						</manifest>
+					</archive>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id> <!-- this is used for inheritance merges -->
+						<phase>package</phase> <!-- bind to the packaging phase -->
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<showDeprecation>true</showDeprecation>
+					<showWarnings>true</showWarnings>
+					<!--executable>${env.JAVA_7_HOME}/bin/javac</executable -->
+					<fork>true</fork>
+				</configuration>
+			</plugin>
+
+		</plugins>
 	</build>
 
 </project>
