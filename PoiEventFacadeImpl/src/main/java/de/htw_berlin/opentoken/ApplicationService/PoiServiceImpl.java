@@ -5,10 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
-import org.postgresql.translation.messages_de;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -69,7 +66,6 @@ public class PoiServiceImpl implements PoiService {
 					} else {
 						throw new IllegalArgumentException("Geokoordinaten liegen nicht im Bereich.");
 						//logger.debug("Sample debug message"); <- geht nicht weiss nicht warum
-						logger.warn("hallo");
 					}
 				} else {
 					throw new AuthorizationException(userId);
