@@ -34,7 +34,7 @@ import de.htw_berlin.opentoken.springdatarepository.UserRepository;
 @Service
 public class PoiServiceImpl implements PoiService {
 
-	static final Logger logger = Logger.getLogger(PoiServiceImpl.class);
+	private final static Logger log = Logger.getLogger(PoiServiceImpl.class);
 
 	@Autowired
 	PoiRepository poiRepository;
