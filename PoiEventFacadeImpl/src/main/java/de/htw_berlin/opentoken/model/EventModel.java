@@ -6,17 +6,19 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 @Entity
 public class EventModel implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2628919549657024832L;
 
 	@Id 
 	@GeneratedValue 
@@ -28,7 +30,7 @@ public class EventModel implements Serializable{
 	
 	private Calendar date;
 	
-	@OneToOne(mappedBy="createdEvent")//(fetch=FetchType.LAZY)
+	@ManyToOne//(fetch=FetchType.LAZY)
 	//@JoinColumn(name="ADDRESS_ID")
 	private UserModel createdBy;
 	

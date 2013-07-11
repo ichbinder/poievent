@@ -10,6 +10,11 @@ import javax.persistence.ManyToOne;
 @Entity
 public class TagModel implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1291742894137432368L;
+
 	@Id 
 	@GeneratedValue 
 	Long tagId;

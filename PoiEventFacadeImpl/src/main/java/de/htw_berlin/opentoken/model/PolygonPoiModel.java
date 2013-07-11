@@ -6,12 +6,15 @@ import java.util.Set;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 @Entity
 @DiscriminatorValue(value="PolygonPoiModel")
 public class PolygonPoiModel extends PoiModel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -249477407937258847L;
 	@OneToMany(mappedBy="polygonPoi")
 	private List<CoordinateModel> polygon;
 

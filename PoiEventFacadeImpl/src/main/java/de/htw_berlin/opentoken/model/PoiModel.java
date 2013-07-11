@@ -3,7 +3,6 @@ package de.htw_berlin.opentoken.model;
 import java.io.Serializable;
 import java.util.Set;
 
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -17,6 +16,11 @@ import javax.persistence.OneToOne;
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 public abstract class PoiModel implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5976842760169608982L;
+
 	@Id 
 	@GeneratedValue 
 	Long poiId;

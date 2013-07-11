@@ -10,6 +10,11 @@ import javax.persistence.ManyToOne;
 @Entity
 public class CoordinateModel implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6711963735464246234L;
+
 	@Id 
 	@GeneratedValue 
 	Long coordinateId;

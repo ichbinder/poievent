@@ -9,6 +9,11 @@ import javax.persistence.Entity;
 @DiscriminatorValue(value="SimplePoiModel")
 public class SimplePoiModel extends PoiModel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4834486233127369688L;
+
 	private Float latitude;
 	
 	private Float longitude;

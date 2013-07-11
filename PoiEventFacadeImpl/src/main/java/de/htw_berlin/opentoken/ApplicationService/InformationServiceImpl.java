@@ -32,7 +32,11 @@ public class InformationServiceImpl implements InformationService {
 	@Transactional
 	public long erstelleEvent(Long userId, String title, String description) {
 		EventModel eventModel = new EventModel(title, description,userRepository.findOne(userId));
+		UserModel userModel = userRepository.findOne(userId);
+		userModel.addOwnedEvent(eventModel);
+		
 		eventRepository.saveAndFlush(eventModel);
+		userRepository.saveAndFlush(userModel);
 		
 		return eventModel.getEventId();	
 	}
@@ -72,6 +76,9 @@ public class InformationServiceImpl implements InformationService {
 		EventModel eventModel = eventRepository.findOne(eventId);
 		UserModel userModel = userRepository.findOne(userId);
 		eventModel.addSubscribtion(userModel);
+		userModel.addSubscriptionFor(eventModel);
+		
+		userRepository.saveAndFlush(userModel);
 		eventRepository.saveAndFlush(eventModel);
 	}
 
@@ -80,7 +87,7 @@ public class InformationServiceImpl implements InformationService {
 	public Set<Event> findSubscribedEventsBy(Long userId) {
 		// TODO Auto-generated method stub
 		Set<Event> temp = new HashSet<Event>();
-		Set<EventModel> eventModelList = eventRepository.findSubscriptionFor(userRepository.findOne(userId));
+		Set<EventModel> eventModelList = userRepository.findOne(userId).getSubscriptedEvent();
 		Event tempEvent = new Event();
 		for(EventModel i : eventModelList)
 		{	
@@ -98,7 +105,7 @@ public class InformationServiceImpl implements InformationService {
 	public Set<Event> findOwnedEventsBy(Long userId) {
 		// TODO Auto-generated method stub
 		Set<Event> temp = new HashSet<Event>();
-		Set<EventModel> eventModelList = eventRepository.findOwnerFor(userRepository.findOne(userId));
+		Set<EventModel> eventModelList = userRepository.findOne(userId).getOwnedEvents();
 		Event tempEvent = new Event();
 		for(EventModel i : eventModelList)
 		{	

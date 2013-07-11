@@ -71,6 +71,7 @@ public class PoiServiceImpl implements PoiService {
 					throw new AuthorizationException(userId);
 				}
 			} else {
+				log.error("Nutzer");
 				throw new IllegalArgumentException("Nutzer existiert nicht.");
 			}
 		} else {

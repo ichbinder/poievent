@@ -4,14 +4,19 @@ import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity 
 public class UserModel implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5736195639326656667L;
 
 	@Id 
 	@GeneratedValue 
@@ -25,11 +30,11 @@ public class UserModel implements Serializable {
 	
 	private Boolean admin;
 	
-	@OneToOne
-	private EventModel createdEvent;
+	@OneToMany(mappedBy="createdby")
+	private Set<EventModel> createdEvent;
 	
 	@ManyToMany
-	private Set<EventModel> event;
+	private Set<EventModel> subscriptFor;
 	
 	@OneToOne
 	private PoiModel poi;
@@ -82,5 +87,21 @@ public class UserModel implements Serializable {
 
 	public void setAdmin(Boolean admin) {
 		this.admin = admin;
+	}
+	public Set<EventModel> getOwnedEvents()
+	{
+		return createdEvent;
+	}
+	public void addOwnedEvent(EventModel event)
+	{
+		createdEvent.add(event);
+	}
+	public Set<EventModel> getSubscriptedEvent()
+	{
+		return subscriptFor;
+	}
+	public void addSubscriptionFor(EventModel event)
+	{
+		subscriptFor.add(event);
 	}
 }

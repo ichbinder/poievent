@@ -9,6 +9,11 @@ import javax.persistence.Entity;
 @DiscriminatorValue("CityPoiModel")
 public class CityPoiModel extends SimplePoiModel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7005996652466494609L;
+
 	private String street;
 	
 	private String city;
