@@ -1,5 +1,7 @@
 package de.htw_berlin.opentoken.ApplicationService;
 
+
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,6 +12,8 @@ import de.htw_berlin.opentoken.springdatarepository.UserRepository;
 @Service
 public class UserServiceImpl implements UserService {
 
+	private static final Logger logger = Logger.getLogger(UserServiceImpl.class); 
+	
 	@Autowired
 	UserRepository userRepository;
 	

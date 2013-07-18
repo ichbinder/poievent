@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,9 +19,13 @@ import de.htw_berlin.opentoken.springdatarepository.EventRepository;
 import de.htw_berlin.opentoken.springdatarepository.PoiRepository;
 import de.htw_berlin.opentoken.springdatarepository.UserRepository;
 
+
+
 @Service
 public class InformationServiceImpl implements InformationService {
 
+	private static final Logger logger = Logger.getLogger(InformationServiceImpl.class); 
+	
 	@Autowired
 	PoiRepository poiRepository;
 	@Autowired
