@@ -1,6 +1,7 @@
 package de.htw_berlin.opentoken.model;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -8,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 @Entity 
 public class UserModel implements Serializable {
@@ -16,7 +16,7 @@ public class UserModel implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 5736195639326656667L;
+	private static final long serialVersionUID = -1230508833735133156L;
 
 	@Id 
 	@GeneratedValue 
@@ -36,8 +36,8 @@ public class UserModel implements Serializable {
 	@ManyToMany
 	private Set<EventModel> subscriptFor;
 	
-	@OneToOne
-	private PoiModel poi;
+	@OneToMany(mappedBy="createdBy")
+	private List<PoiModel> poi;
 	
 	public UserModel(){
 	}
