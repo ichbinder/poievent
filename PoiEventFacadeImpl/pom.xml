@@ -18,7 +18,7 @@
 		<dependency>
 			<groupId>de.htw_berlin.f4.ai.kbe.poievent</groupId>
 			<artifactId>PoiEventFacadeDefinition</artifactId>
-			<version>0.0.5</version>
+			<version>0.0.6</version>
 		</dependency>
 	
 		<dependency>
