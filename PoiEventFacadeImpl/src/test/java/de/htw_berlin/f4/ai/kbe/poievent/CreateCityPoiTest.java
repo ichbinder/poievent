@@ -2,11 +2,11 @@ package de.htw_berlin.f4.ai.kbe.poievent;
 
 import static org.junit.Assert.*;
 
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-@SuppressWarnings("unused")
 public class CreateCityPoiTest extends TestUserInit{
 
 	final static String HTW_STREET = "Wilhelminenhofstraße 75a"; 
@@ -27,7 +27,7 @@ public class CreateCityPoiTest extends TestUserInit{
 		//verify
 		assertEquals(expected, actual);
 	}
-	/*
+	
 	@Test(expected=AuthorizationException.class)
 	public void testcreateCityPoiWithoutPermissions() {
 		poiEvent.createCityPOI(userId, PoiEventTestConstants.HTW_NAME, PoiEventTestConstants.HTW_TAGS, HTW_STREET, BERLIN, 
@@ -75,6 +75,6 @@ public class CreateCityPoiTest extends TestUserInit{
 	public void testLatitudeNull() {
 		poiEvent.createCityPOI(adminId, PoiEventTestConstants.HTW_NAME, PoiEventTestConstants.HTW_TAGS, HTW_STREET, BERLIN,
 				null, PoiEventTestConstants.HTW_LONGITUDE);
-	}*/
+	}
 	
 }

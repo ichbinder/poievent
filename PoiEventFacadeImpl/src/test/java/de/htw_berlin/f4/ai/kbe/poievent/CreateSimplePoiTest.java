@@ -3,6 +3,8 @@ package de.htw_berlin.f4.ai.kbe.poievent;
 import static org.junit.Assert.*;
 
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 public class CreateSimplePoiTest extends TestUserInit{
@@ -21,7 +23,7 @@ public class CreateSimplePoiTest extends TestUserInit{
 		assertEquals(expected, actual);
 		poiEvent.deletePOI(adminId, PoiEventTestConstants.HTW_NAME);
 	}
-	/*
+	
 	@Test
 	public void testCreateSimplePoiDuplicate() {
 		//act
@@ -32,6 +34,7 @@ public class CreateSimplePoiTest extends TestUserInit{
 		}
 		catch(IllegalArgumentException e){
 			poiEvent.deletePOI(adminId, PoiEventTestConstants.HTW_NAME);
+			return;
 		}
 		fail();
 	}
@@ -46,6 +49,7 @@ public class CreateSimplePoiTest extends TestUserInit{
 		}
 		catch(IllegalArgumentException e){
 			poiEvent.deletePOI(adminId, PoiEventTestConstants.HTW_NAME);
+			return;
 		}
 		fail();
 	}
@@ -88,6 +92,6 @@ public class CreateSimplePoiTest extends TestUserInit{
 	@Test(expected=IllegalArgumentException.class)
 	public void testLatitudeNull() {
 		poiEvent.createSimplePOI(adminId, PoiEventTestConstants.HTW_NAME, PoiEventTestConstants.HTW_TAGS, null, PoiEventTestConstants.HTW_LONGITUDE);
-	}*/
+	}
 	
 }

@@ -28,8 +28,7 @@ public class PoiTagsTest extends TestInitWithPois{
 		poiEvent.addPoiTag(userId, PoiEventTestConstants.HTW_NAME, UAS);
 	}
 	
-	@Test 
-	public void testDeletePoiTags(){
+	@Test void testDeletePoiTags(){
 		poiEvent.deletePoiTag(adminId, PoiEventTestConstants.HTW_NAME, PoiEventTestConstants.HOCHSCHULE);
 		Poi poi = poiEvent.getPoi(PoiEventTestConstants.HTW_NAME);
 		Set<String> tags = poi.getTags();
@@ -47,8 +46,8 @@ public class PoiTagsTest extends TestInitWithPois{
 		poiEvent.createSimplePOI(adminId, "BBB", new HashSet<String>(Arrays.asList("Bildung", "Mauer")), 0f, 0f);
 		poiEvent.createSimplePOI(adminId, "CCC", new HashSet<String>(Arrays.asList("Spiegel", "Welt")), 0f, 0f);
 	
-		assertEquals(2, poiEvent.getPoiByTag("Bildung"));
-		assertEquals(1, poiEvent.getPoiByTag("Spiegel"));
+		assertEquals(2, poiEvent.getPoiByTag("Bildung").size());
+		assertEquals(1, poiEvent.getPoiByTag("Spiegel").size());
 		
 		poiEvent.deletePOI(adminId, "AAA");
 		poiEvent.deletePOI(adminId, "BBB");

@@ -7,9 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class EventTest extends TestUserInit {
-
-	
-	
 	
 	long event1Id, event2Id;
 
@@ -37,12 +34,12 @@ public class EventTest extends TestUserInit {
 	}
 
 	@Test
-	public void testDeleteWithoutPrmissions() {
+	public void testDeleteWithoutPermissions() {
 		initPoi();
 		long id = addUser2();
 		try {
 			poiEvent.deleteEvent(id, event1Id);
-		} catch (SecurityException e) {
+		} catch (AuthorizationException e) {
 			return;
 		} finally {
 			deleteUser2();
@@ -50,7 +47,6 @@ public class EventTest extends TestUserInit {
 		fail();
 	}
 
-	
 	@Test
 	public void testDeleteAsAdmin() {
 		initPoi();
@@ -73,7 +69,7 @@ public class EventTest extends TestUserInit {
 		assertEquals(2,
 				poiEvent.findEventsForPoi(PoiEventTestConstants.HTW_NAME)
 						.size());
-		assertEquals(2, poiEvent.findOwnedEvents(userId));
+		assertEquals(2, poiEvent.findOwnedEvents(userId).size());
 		poiEvent.deleteEvent(userId, event1Id);
 		assertEquals(1,
 				poiEvent.findEventsForPoi(PoiEventTestConstants.HTW_NAME)
@@ -87,13 +83,13 @@ public class EventTest extends TestUserInit {
 	public void testCascadeDelete() {
 		initPoi();
 		deletePoi();
-		assertEquals(0, poiEvent.findOwnedEvents(userId));
+		assertEquals(0, poiEvent.findOwnedEvents(userId).size());
 	}
 
 	@Test
-	public void testFindeOwnedEvents() {
+	public void testFindOwnedEvents() {
 		initPoi();
-		assertEquals(2, poiEvent.findOwnedEvents(userId));
+		assertEquals(2, poiEvent.findOwnedEvents(userId).size());
 		deletePoi();
 	}
 
@@ -102,9 +98,9 @@ public class EventTest extends TestUserInit {
 		initPoi();
 		long user2Id = addUser2();
 		poiEvent.subscribeToEvent(user2Id, event1Id);
-		assertEquals(1, poiEvent.findSubscribedEvents(userId).size());
+		assertEquals(1, poiEvent.findSubscribedEvents(user2Id).size());
 		poiEvent.subscribeToEvent(user2Id, event2Id);
-		assertEquals(2, poiEvent.findSubscribedEvents(userId).size());
+		assertEquals(2, poiEvent.findSubscribedEvents(user2Id).size());
 		deleteUser2();
 		deletePoi();
 	}
@@ -114,7 +110,7 @@ public class EventTest extends TestUserInit {
 		initPoi();
 		assertEquals(0, poiEvent.getMessages(event1Id));
 		poiEvent.addMessage(event1Id, userId, "Nachricht", "zu empfehlen");
-		assertEquals(1, poiEvent.getMessages(event1Id));
+		assertEquals(1, poiEvent.getMessages(event1Id).size());
 		deletePoi();
 	}
 	
@@ -128,7 +124,7 @@ public class EventTest extends TestUserInit {
 	
 	
 	@Test
-	public void testAddMessagesOfInvalidEvent() {
+	public void testDeleteMessagesWithInvalidUserId() {
 		initPoi();
 		try {
 			poiEvent.deleteEvent(746374645734L, event1Id);

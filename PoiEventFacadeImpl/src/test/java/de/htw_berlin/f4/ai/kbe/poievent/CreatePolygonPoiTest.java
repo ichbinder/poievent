@@ -25,8 +25,6 @@ public class CreatePolygonPoiTest extends TestUserInit{
 	List<Coordinate> notValidPolygon = new ArrayList<Coordinate>(
 			Arrays.asList(valid1,valid2,notValid,valid3));
 	
-	
-	
 	@Test
 	public void testCreatePolygonPOI() {
 		

@@ -22,7 +22,7 @@ public class TestInitWithPois extends TestUserInit{
 	 
 	@After 
 	public void tearDown(){
-		poiEvent.deletePOI(userId, PoiEventTestConstants.HTW_NAME);
+		poiEvent.deletePOI(adminId, PoiEventTestConstants.HTW_NAME);
 		super.tearDown();
 	}
 	
