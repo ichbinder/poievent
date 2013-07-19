@@ -34,7 +34,7 @@ public class EventModel implements Serializable{
 	//@JoinColumn(name="ADDRESS_ID")
 	private UserModel createdBy;
 	
-	@ManyToMany(mappedBy="event")
+	@ManyToMany(mappedBy="subscriptFor")
 	private Set<UserModel> subscribedBy;
 	
 	@OneToMany(mappedBy="event")

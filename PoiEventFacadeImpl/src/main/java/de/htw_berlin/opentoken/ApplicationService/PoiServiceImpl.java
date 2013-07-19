@@ -64,17 +64,19 @@ public class PoiServiceImpl implements PoiService {
 						SimplePoiModel simplePoiModel = new SimplePoiModel(name, tagModels, user, longitude, latitude);
 						simplePoiRepository.saveAndFlush(simplePoiModel);
 					} else {
-						logger.debug("Sample debug message"); 
-						throw new IllegalArgumentException("Geokoordinaten liegen nicht im Bereich.");
+						log.warn("createSimplePOI: Geokoordinaten liegen nicht im vorgegebenen Bereich.");
+						throw new IllegalArgumentException("Geokoordinaten liegen nicht im vorgegebenen Bereich.");
 					}
 				} else {
+					log.warn("createSimplePOI: Nutzer hat keine Admin-Rechte.");
 					throw new AuthorizationException(userId);
 				}
 			} else {
-				log.error("Nutzer");
+				log.warn("createSimplePOI: Nutzer existiert nicht.");
 				throw new IllegalArgumentException("Nutzer existiert nicht.");
 			}
 		} else {
+			log.warn("createSimplePOI: Nutzer existiert nicht.");
 			throw new IllegalArgumentException("Nutzer existiert nicht.");
 		}
 	}
@@ -96,15 +98,19 @@ public class PoiServiceImpl implements PoiService {
 						CityPoiModel cityPoiModel = new CityPoiModel(name, tagModels, user, street, city, latitude, longitude);
 						cityPoiRepository.saveAndFlush(cityPoiModel);
 					} else {
-						throw new IllegalArgumentException("Geokoordinaten liegen nicht im Bereich.");
+						log.warn("createCityPOI: Geokoordinaten liegen nicht im vorgegebenen Bereich.");
+						throw new IllegalArgumentException("Geokoordinaten liegen nicht im vorgegebenen Bereich.");
 					}
 				} else {
+					log.warn("createCityPOI: Nutzer hat keine Admin-Rechte.");
 					throw new AuthorizationException(userId);
 				}
 			} else {
+				log.warn("createCityPOI: Nutzer existiert nicht.");
 				throw new IllegalArgumentException("Nutzer existiert nicht.");
 			}
 		} else {
+			log.warn("createCityPOI: Nutzer existiert nicht.");
 			throw new IllegalArgumentException("Nutzer existiert nicht.");
 		}
 	}
@@ -131,15 +137,19 @@ public class PoiServiceImpl implements PoiService {
 						PolygonPoiModel polygonPoiModel = new PolygonPoiModel(name, tagModels, user, coordinateModels);
 						polygonPoiRepository.saveAndFlush(polygonPoiModel);
 					} else {
-						throw new IllegalArgumentException("Geokoordinaten liegen nicht im Bereich.");
+						log.warn("createPolygonPOI: Geokoordinaten liegen nicht im vorgegebenen Bereich.");
+						throw new IllegalArgumentException("Geokoordinaten liegen nicht im vorgegebenen Bereich.");
 					}
 				} else {
+					log.warn("createPolygonPOI: Nutzer hat keine Admin-Rechte.");
 					throw new AuthorizationException(userId);
 				}
 			} else {
+				log.warn("createPolygonPOI: Nutzer existiert nicht.");
 				throw new IllegalArgumentException("Nutzer existiert nicht.");
 			}
 		} else {
+			log.warn("createPolygonPOI: Nutzer existiert nicht.");
 			throw new IllegalArgumentException("Nutzer existiert nicht.");
 		}
 	}

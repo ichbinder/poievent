@@ -7,16 +7,12 @@ import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 @Entity 
 public class UserModel implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -1230508833735133156L;
 
 	@Id 
@@ -31,7 +27,7 @@ public class UserModel implements Serializable {
 	
 	private Boolean admin;
 	
-	@OneToMany(mappedBy="createdby")
+	@OneToMany(mappedBy="createdBy")
 	private Set<EventModel> createdEvent;
 	
 	@ManyToMany
