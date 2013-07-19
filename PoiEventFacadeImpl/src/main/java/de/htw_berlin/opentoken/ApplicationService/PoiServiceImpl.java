@@ -64,8 +64,8 @@ public class PoiServiceImpl implements PoiService {
 						SimplePoiModel simplePoiModel = new SimplePoiModel(name, tagModels, user, longitude, latitude);
 						simplePoiRepository.saveAndFlush(simplePoiModel);
 					} else {
+						logger.debug("Sample debug message"); 
 						throw new IllegalArgumentException("Geokoordinaten liegen nicht im Bereich.");
-						//logger.debug("Sample debug message"); <- geht nicht weiss nicht warum
 					}
 				} else {
 					throw new AuthorizationException(userId);
