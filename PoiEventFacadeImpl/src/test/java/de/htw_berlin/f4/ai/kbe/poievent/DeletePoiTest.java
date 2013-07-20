@@ -1,15 +1,12 @@
 package de.htw_berlin.f4.ai.kbe.poievent;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
-
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 public class DeletePoiTest extends TestUserInit{
 
-		
+
 	@Test
 	public void deletePoi() {
 
@@ -19,7 +16,7 @@ public class DeletePoiTest extends TestUserInit{
 		poiEvent.deletePOI(adminId, PoiEventTestConstants.HTW_NAME);
 	}
 
-	@Test//(expected=AuthorizationException.class)
+	@Test(expected=AuthorizationException.class)
 	public void testCreatePolygonPOIWithoutPermissions() {
 		
 		poiEvent.createSimplePOI(adminId, PoiEventTestConstants.HTW_NAME, PoiEventTestConstants.HTW_TAGS, 

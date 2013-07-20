@@ -1,13 +1,12 @@
 package de.htw_berlin.f4.ai.kbe.poievent;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 public class EventTest extends TestUserInit {
-	
+
 	long event1Id, event2Id;
 
 	private void initPoi() {
