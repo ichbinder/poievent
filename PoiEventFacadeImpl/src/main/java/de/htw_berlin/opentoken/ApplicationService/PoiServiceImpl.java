@@ -6,17 +6,16 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import de.htw_berlin.f4.ai.kbe.poievent.AuthorizationException;
-import de.htw_berlin.f4.ai.kbe.poievent.CityPoi;
 import de.htw_berlin.f4.ai.kbe.poievent.Coordinate;
 import de.htw_berlin.f4.ai.kbe.poievent.Event;
 import de.htw_berlin.f4.ai.kbe.poievent.Poi;
-import de.htw_berlin.f4.ai.kbe.poievent.PolygonPoi;
-import de.htw_berlin.f4.ai.kbe.poievent.SimplePoi;
 import de.htw_berlin.opentoken.model.CityPoiModel;
 import de.htw_berlin.opentoken.model.CoordinateModel;
 import de.htw_berlin.opentoken.model.EventModel;
@@ -29,6 +28,7 @@ import de.htw_berlin.opentoken.springdatarepository.CityPoiRepository;
 import de.htw_berlin.opentoken.springdatarepository.PoiRepository;
 import de.htw_berlin.opentoken.springdatarepository.PolygonPoiRepository;
 import de.htw_berlin.opentoken.springdatarepository.SimplePoiRepository;
+import de.htw_berlin.opentoken.springdatarepository.TagRepository;
 import de.htw_berlin.opentoken.springdatarepository.UserRepository;
 
 @Service
@@ -46,7 +46,9 @@ public class PoiServiceImpl implements PoiService {
 	PolygonPoiRepository polygonPoiRepository;
 	@Autowired
 	UserRepository userRepository;
-
+	@Autowired
+	TagRepository tagRepository;
+	
 	@Override
 	@Transactional
 	public void createSimplePOI(Long userId, String name, Set<String> tags,
@@ -55,14 +57,16 @@ public class PoiServiceImpl implements PoiService {
 			if (userRepository.findOne(userId) != null) {
 				if (userRepository.findByAdmin(userId) != null) {
 					if (geokoordinateOk(latitude, longitude)) {
-						UserModel user = userRepository.findOne(userId);
+						UserModel userModel = userRepository.findByAdmin(userId);
+						SimplePoiModel simplePoiModel = new SimplePoiModel(name, userModel, longitude, latitude);
 						Set<TagModel> tagModels = new HashSet<TagModel>();
 						for (String tag : tags) {
 							TagModel tagModel = new TagModel(tag);
+							tagModel.setPoi(simplePoiModel);
 							tagModels.add(tagModel);
-						}				
-						SimplePoiModel simplePoiModel = new SimplePoiModel(name, tagModels, user, longitude, latitude);
-						simplePoiRepository.saveAndFlush(simplePoiModel);
+						}
+						simplePoiModel.setTags(tagModels);
+						simplePoiRepository.save(simplePoiModel);
 					} else {
 						log.warn("createSimplePOI: Geokoordinaten liegen nicht im vorgegebenen Bereich.");
 						throw new IllegalArgumentException("Geokoordinaten liegen nicht im vorgegebenen Bereich.");
@@ -89,14 +93,16 @@ public class PoiServiceImpl implements PoiService {
 			if (userRepository.findOne(userId) != null) {
 				if (userRepository.findByAdmin(userId) != null) {
 					if (geokoordinateOk(latitude, longitude)) {
-						UserModel user = userRepository.findOne(userId);
+						/*UserModel userModel = userRepository.findByAdmin(userId);
+						CityPoiModel cityPoiModel = new CityPoiModel(name, userModel, longitude, latitude);
 						Set<TagModel> tagModels = new HashSet<TagModel>();
 						for (String tag : tags) {
 							TagModel tagModel = new TagModel(tag);
+							tagModel.setPoi(simplePoiModel);
 							tagModels.add(tagModel);
-						}	
-						CityPoiModel cityPoiModel = new CityPoiModel(name, tagModels, user, street, city, latitude, longitude);
-						cityPoiRepository.saveAndFlush(cityPoiModel);
+						}
+						simplePoiModel.setTags(tagModels);
+						simplePoiRepository.save(simplePoiModel);*/
 					} else {
 						log.warn("createCityPOI: Geokoordinaten liegen nicht im vorgegebenen Bereich.");
 						throw new IllegalArgumentException("Geokoordinaten liegen nicht im vorgegebenen Bereich.");
@@ -187,7 +193,7 @@ public class PoiServiceImpl implements PoiService {
 						if (!tags.contains(tagModel)) {
 							tags.add(tagModel);
 							poiModel.setTags(tags);
-							poiRepository.saveAndFlush(poiModel);
+							poiRepository.save(poiModel);
 						} else {
 							throw new IllegalArgumentException("Tag exsistiert schon.");
 						}
@@ -264,7 +270,24 @@ public class PoiServiceImpl implements PoiService {
 	@Override
 	@Transactional
 	public Poi getPoi(String name) {
-		if (cityPoiRepository.findByName(name) != null) {
+		if (poiRepository.findByName(name) != null) {
+			PoiModel poiModel = poiRepository.findByName(name);
+			if (poiModel instanceof CityPoiModel) {
+				CityPoiModel cityPoiModel = (CityPoiModel)poiModel;
+				Set<String> tags = new HashSet<String>();
+				System.out.println("jojo: " + cityPoiModel.getTags().size());
+				for (TagModel tagModel : cityPoiModel.getTags())
+					System.out.println("Hallo: " + tagModel.getTag());
+			} else if (poiModel instanceof SimplePoiModel) {
+				SimplePoiModel simplePoiModel = (SimplePoiModel)poiModel;
+				Set<String> tags = new HashSet<String>();
+				System.out.println("jojo: " + simplePoiModel.getTags().size());
+				for (TagModel tagModel : simplePoiModel.getTags())
+					System.out.println("Hallo: " + tagModel.getTag());
+			}
+		} else
+			System.out.println("SCHEISSE!");
+		/*if (cityPoiRepository.findByName(name) != null) {
 			CityPoiModel cityPoiModel = cityPoiRepository.findByName(name);
 			Set<String> tags = new HashSet<String>();
 			for (TagModel tagModel : cityPoiModel.getTags())
@@ -295,6 +318,8 @@ public class PoiServiceImpl implements PoiService {
 			return polygonPoi;
 		} else
 			return null;
+			*/
+		return null;
 	}
 	
 	@Override

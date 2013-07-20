@@ -27,7 +27,7 @@ public class CreateCityPoiTest extends TestUserInit{
 		//verify
 		assertEquals(expected, actual);
 	}
-	
+	/*
 	@Test(expected=AuthorizationException.class)
 	public void testcreateCityPoiWithoutPermissions() {
 		poiEvent.createCityPOI(userId, PoiEventTestConstants.HTW_NAME, PoiEventTestConstants.HTW_TAGS, HTW_STREET, BERLIN, 
@@ -76,5 +76,5 @@ public class CreateCityPoiTest extends TestUserInit{
 		poiEvent.createCityPOI(adminId, PoiEventTestConstants.HTW_NAME, PoiEventTestConstants.HTW_TAGS, HTW_STREET, BERLIN,
 				null, PoiEventTestConstants.HTW_LONGITUDE);
 	}
-	
+	*/
 }

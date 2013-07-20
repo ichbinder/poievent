@@ -2,8 +2,6 @@ package de.htw_berlin.f4.ai.kbe.poievent;
 
 import static org.junit.Assert.*;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 public class UserTest extends TestInit{

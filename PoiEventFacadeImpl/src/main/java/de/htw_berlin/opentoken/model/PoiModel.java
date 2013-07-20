@@ -3,11 +3,13 @@ package de.htw_berlin.opentoken.model;
 import java.io.Serializable;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -23,11 +25,12 @@ public abstract class PoiModel implements Serializable{
 	Long poiId;
 	
 	@ManyToOne
+	@JoinColumn(nullable = false)
 	protected UserModel createdBy;
 	
 	protected String name;
 	
-	@OneToMany(mappedBy="poi")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "howIsTheTagOfPoi")
 	protected Set<TagModel> tags;
 	
 	@OneToMany(mappedBy="poi")

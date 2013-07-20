@@ -23,7 +23,7 @@ public class CreateSimplePoiTest extends TestUserInit{
 		assertEquals(expected, actual);
 		poiEvent.deletePOI(adminId, PoiEventTestConstants.HTW_NAME);
 	}
-	
+	/*
 	@Test
 	public void testCreateSimplePoiDuplicate() {
 		//act
@@ -93,5 +93,5 @@ public class CreateSimplePoiTest extends TestUserInit{
 	public void testLatitudeNull() {
 		poiEvent.createSimplePOI(adminId, PoiEventTestConstants.HTW_NAME, PoiEventTestConstants.HTW_TAGS, null, PoiEventTestConstants.HTW_LONGITUDE);
 	}
-	
+	*/
 }
