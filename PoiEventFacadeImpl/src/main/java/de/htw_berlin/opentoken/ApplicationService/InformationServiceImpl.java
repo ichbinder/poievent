@@ -1,6 +1,7 @@
 package de.htw_berlin.opentoken.ApplicationService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -117,9 +118,10 @@ public class InformationServiceImpl implements InformationService {
 		// TODO Auto-generated method stub
 		Set<Event> temp = new HashSet<Event>();
 		Set<EventModel> eventModelList = userRepository.findOne(userId).getOwnedEvents();
-		Event tempEvent = new Event();
+
 		for(EventModel i : eventModelList)
 		{	
+			Event tempEvent = new Event();
 			tempEvent.setTitle(i.getTitle());
 			tempEvent.setDate(i.getDate());
 			tempEvent.setDescription(i.getDescription());
@@ -134,18 +136,26 @@ public class InformationServiceImpl implements InformationService {
 	public List<Message> getMessage(Long eventId) {
 		// TODO Auto-generated method stub
 		List<Message> temp = new ArrayList<Message>();
-		List<MessageModel> tempModel;
+		List<MessageModel> tempModel = new ArrayList<MessageModel>();
 		Message buffer = new Message();
 		EventModel eventModel = eventRepository.findOne(eventId);
 		tempModel = eventModel.getMessage();
 		
-		for(MessageModel i: tempModel)
+		if(tempModel.isEmpty())
 		{
-
-			buffer.setTitle(i.getTitle());
-			buffer.setDescription(i.getDescription());
-			temp.add(buffer);
+			temp = null;
 		}
+		else
+		{
+			Collections.sort(tempModel);
+			
+			for(MessageModel i: tempModel)
+			{
+				buffer.setTitle(i.getTitle());
+				buffer.setDescription(i.getDescription());
+				temp.add(buffer);
+			}
+		}	
 		return temp;
 	}
 

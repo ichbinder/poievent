@@ -1,6 +1,8 @@
 package de.htw_berlin.f4.ai.kbe.poievent;
 
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -109,7 +111,7 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 				else
 				{
 					logger.error("User besitzt keine Adminrechte");
-					throw new SecurityException("Hat den Event nicht angelegt oder ist kein Admin.");
+					throw new AuthorizationException(userId);
 				}
 			}
 			else
@@ -126,7 +128,7 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 	}
 
 	public Set<Event> findEventsForPoi(String poiName) {
-		Set<Event> temp;
+		Set<Event> temp = new HashSet<Event>();
 		if(poiService.validatePoi(poiName))
 			temp = poiService.getAllEventsByPoi(poiName);
 		else
@@ -180,7 +182,7 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 	}
 
 	public List<Message> getMessages(Long eventId) {
-		List<Message> temp;
+		List<Message> temp = new ArrayList<Message>();
 		if(informationService.validateEvent(eventId))
 			temp = informationService.getMessage(eventId);
 		else
@@ -267,7 +269,7 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 			String content) {
 		if(informationService.validateEvent(eventId))
 		{
-			if(informationService.isPartInEvent(eventId, userId))
+			if(informationService.isPartInEvent(eventId, userId) || (informationService.istBesitzerVon(eventId) == userId))
 				informationService.addMessage(eventId, title, content);
 			else
 			{
