@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -30,14 +31,13 @@ public class EventModel implements Serializable{
 	
 	private Calendar date;
 	
-	@ManyToOne//(fetch=FetchType.LAZY)
-	//@JoinColumn(name="ADDRESS_ID")
+	@ManyToOne
 	private UserModel createdBy;
 	
 	@ManyToMany(mappedBy="subscriptFor")
 	private Set<UserModel> subscribedBy;
 	
-	@OneToMany(mappedBy="event")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="event")
 	private List<MessageModel> messages;
 
 	@ManyToOne
