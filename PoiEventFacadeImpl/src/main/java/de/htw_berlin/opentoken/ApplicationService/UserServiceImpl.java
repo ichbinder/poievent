@@ -22,9 +22,15 @@ public class UserServiceImpl implements UserService {
 	public boolean validateUser(Long userId) {
 		// TODO Auto-generated method stub		
 		if (userRepository.findOne(userId) != null)
+		{	
+			logger.info("User gefunden");
 			return true;
+		}
 		else
+		{
+			logger.info("User nicht gefunden");
 			return false;
+		}
 	}
 
 	@Override
@@ -33,6 +39,8 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		UserModel user = new UserModel(name, firstname, email);
 		userRepository.saveAndFlush(user);
+		
+		logger.info("User erstellt");
 		
 		return user.getUserId();
 	}
@@ -44,6 +52,7 @@ public class UserServiceImpl implements UserService {
 		UserModel user = userRepository.findOne(userId);
 		user.setAdmin(true);
 		userRepository.saveAndFlush(user);
+		logger.info("User zum Admin gemacht");
 	}
 
 	@Override
@@ -52,6 +61,7 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		UserModel user = userRepository.findOne(userId);
 		
+		logger.info("User auf Adminrechte überprüft");
 		return user.getAdmin();
 	}
 
@@ -62,6 +72,7 @@ public class UserServiceImpl implements UserService {
 		UserModel user = userRepository.findOne(userId);
 		user.setAdmin(false);
 		userRepository.saveAndFlush(user);
+		logger.info("User Adminrechte entzogen");
 	}
 
 	@Override
@@ -70,6 +81,7 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		UserModel user = userRepository.findByEmail(email);
 		
+		logger.info("User per Email gesucht");
 		return user.getUserId();
 	}
 
@@ -78,6 +90,7 @@ public class UserServiceImpl implements UserService {
 	public void deleteUserById(Long userId) {
 		// TODO Auto-generated method stub
 		userRepository.delete(userRepository.findOne(userId));
+		logger.info("User per UserID versucht zu löschen");
 	}
 
 	@Override
@@ -85,6 +98,7 @@ public class UserServiceImpl implements UserService {
 	public void deleteUserByEmail(String email) {
 		// TODO Auto-generated method stub
 		userRepository.delete(userRepository.findByEmail(email));
+		logger.info("User per Email gelöscht");
 	}
 
 	@Override
@@ -94,6 +108,8 @@ public class UserServiceImpl implements UserService {
 		boolean checkValue = false;
 		if(userRepository.findByEmail(email) != null)
 			checkValue = true;
+		
+		logger.info("User per Email gefunden");
 		return checkValue;
 	}
 
@@ -106,12 +122,14 @@ public class UserServiceImpl implements UserService {
 		if(userRepository.findByEmail(email) != null) 
 			checkValue = true;
 		
+		logger.info("Überprüft ob User mit der Email vorhanden ist");
 		return checkValue;
 	}
 
 	@Override
 	public UserModel getUserById(Long userId) {
 		// TODO Auto-generated method stub
+		logger.info("User per UserID gesucht");
 		return userRepository.findOne(userId);
 	}
 }

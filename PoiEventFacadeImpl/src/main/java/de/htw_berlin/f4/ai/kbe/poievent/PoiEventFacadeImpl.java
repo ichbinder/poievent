@@ -102,7 +102,7 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 		{	
 			if(userService.validateUser(userId))
 			{	
-				if(hasAdminRole(userId) || userId == informationService.istBesitzerVon(eventId)) // <- NullPointerExaption müssen wir nochmal checken !
+				if(hasAdminRole(userId) || userId == informationService.istBesitzerVon(eventId))
 				{	
 					informationService.loescheEvent(eventId);
 				}

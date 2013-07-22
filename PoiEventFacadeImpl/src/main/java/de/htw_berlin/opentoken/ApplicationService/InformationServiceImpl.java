@@ -43,6 +43,7 @@ public class InformationServiceImpl implements InformationService {
 		eventRepository.saveAndFlush(eventModel);
 		userRepository.saveAndFlush(userModel);
 		
+		logger.info("Event mit den Daten erstellt und Event dem User hinzugefügt");
 		return eventModel.getEventId();	
 	}
 
@@ -51,6 +52,7 @@ public class InformationServiceImpl implements InformationService {
 	public Long istBesitzerVon(Long eventId) {
 		// TODO Auto-generated method stub
 		EventModel eventModel = eventRepository.findOne(eventId);
+		logger.info("Event per EventId gesucht");
 		return eventModel.getOwner().getUserId();
 	}
 
@@ -59,6 +61,7 @@ public class InformationServiceImpl implements InformationService {
 	public void loescheEvent(Long eventId) {
 		// TODO Auto-generated method stub
 		eventRepository.delete(eventId);
+		logger.info("Event per EventId gelöscht");
 	}
 
 	@Override
@@ -71,6 +74,7 @@ public class InformationServiceImpl implements InformationService {
 		{
 			checkEvent = true;
 		}
+		logger.info("Event per EventId auf Existenz geprüft");
 		return checkEvent;
 	}
 
@@ -85,6 +89,7 @@ public class InformationServiceImpl implements InformationService {
 		
 		userRepository.saveAndFlush(userModel);
 		eventRepository.saveAndFlush(eventModel);
+		logger.info("User einem Event hinzugefügt");
 	}
 
 	@Override
@@ -102,6 +107,7 @@ public class InformationServiceImpl implements InformationService {
 		
 			temp.add(tempEvent);
 		}
+		logger.info("Event für die sich ein User angemeldet hat suchen");
 		return temp;
 	}
 
