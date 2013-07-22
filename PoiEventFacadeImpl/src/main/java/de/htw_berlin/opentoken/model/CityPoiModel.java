@@ -24,7 +24,13 @@ public class CityPoiModel extends SimplePoiModel {
 	
 	public CityPoiModel(String name, Set<TagModel> tags, UserModel createdBy, String street,
 			String city, Float latitude, Float longitude){
-		super(name, tags, createdBy, longitude, latitude);
+		this(name, createdBy, street, city, latitude, longitude);
+		super.setTags(tags);
+	}
+	
+	public CityPoiModel(String name, UserModel createdBy, String street,
+			String city, Float latitude, Float longitude){
+		super(name, createdBy, longitude, latitude);
 		this.street = street;
 		this.city = city;
 	}

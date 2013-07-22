@@ -25,7 +25,7 @@ public abstract class PoiModel implements Serializable{
 	Long poiId;
 	
 	@ManyToOne
-	@JoinColumn(nullable = false)
+	@JoinColumn(name = "user_id")
 	protected UserModel createdBy;
 	
 	protected String name;

@@ -1,12 +1,13 @@
 package de.htw_berlin.f4.ai.kbe.poievent;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
+
 
 import org.junit.Test;
 
 public class DeletePoiTest extends TestUserInit{
 
-
+		
 	@Test
 	public void deletePoi() {
 

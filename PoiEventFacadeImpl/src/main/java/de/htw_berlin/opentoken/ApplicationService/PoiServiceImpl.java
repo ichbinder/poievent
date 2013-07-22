@@ -6,16 +6,17 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import de.htw_berlin.f4.ai.kbe.poievent.AuthorizationException;
+import de.htw_berlin.f4.ai.kbe.poievent.CityPoi;
 import de.htw_berlin.f4.ai.kbe.poievent.Coordinate;
 import de.htw_berlin.f4.ai.kbe.poievent.Event;
 import de.htw_berlin.f4.ai.kbe.poievent.Poi;
+import de.htw_berlin.f4.ai.kbe.poievent.PolygonPoi;
+import de.htw_berlin.f4.ai.kbe.poievent.SimplePoi;
 import de.htw_berlin.opentoken.model.CityPoiModel;
 import de.htw_berlin.opentoken.model.CoordinateModel;
 import de.htw_berlin.opentoken.model.EventModel;
@@ -56,20 +57,28 @@ public class PoiServiceImpl implements PoiService {
 		if (userId != null) {
 			if (userRepository.findOne(userId) != null) {
 				if (userRepository.findByAdmin(userId) != null) {
-					if (geokoordinateOk(latitude, longitude)) {
-						UserModel userModel = userRepository.findByAdmin(userId);
-						SimplePoiModel simplePoiModel = new SimplePoiModel(name, userModel, longitude, latitude);
-						Set<TagModel> tagModels = new HashSet<TagModel>();
-						for (String tag : tags) {
-							TagModel tagModel = new TagModel(tag);
-							tagModel.setPoi(simplePoiModel);
-							tagModels.add(tagModel);
+					if (poiRepository.findByName(name) == null) {
+						if (geokoordinateOk(latitude, longitude)) {
+							UserModel createdBy = userRepository.findByAdmin(userId);
+							SimplePoiModel simplePoiModel = new SimplePoiModel(name, createdBy, longitude, latitude);
+							List<PoiModel> poiModels = createdBy.getListOfManagedPois();
+							poiModels.add(simplePoiModel);
+							createdBy.setListOfManagedPois(poiModels);
+							Set<TagModel> tagModels = new HashSet<TagModel>();
+							for (String tag : tags) {
+								TagModel tagModel = new TagModel(tag);
+								tagModel.setPoi(simplePoiModel);
+								tagModels.add(tagModel);
+							}
+							simplePoiModel.setTags(tagModels);
+							simplePoiRepository.save(simplePoiModel);
+						} else {
+							log.warn("createSimplePOI: Geokoordinaten liegen nicht im vorgegebenen Bereich.");
+							throw new IllegalArgumentException("Geokoordinaten liegen nicht im vorgegebenen Bereich.");
 						}
-						simplePoiModel.setTags(tagModels);
-						simplePoiRepository.save(simplePoiModel);
 					} else {
-						log.warn("createSimplePOI: Geokoordinaten liegen nicht im vorgegebenen Bereich.");
-						throw new IllegalArgumentException("Geokoordinaten liegen nicht im vorgegebenen Bereich.");
+						log.warn("createSimplePOI: SimplePoi existiert schon.");
+						throw new IllegalArgumentException("SimplePoi existiert schon.");
 					}
 				} else {
 					log.warn("createSimplePOI: Nutzer hat keine Admin-Rechte.");
@@ -92,20 +101,28 @@ public class PoiServiceImpl implements PoiService {
 		if (userId != null) {
 			if (userRepository.findOne(userId) != null) {
 				if (userRepository.findByAdmin(userId) != null) {
-					if (geokoordinateOk(latitude, longitude)) {
-						/*UserModel userModel = userRepository.findByAdmin(userId);
-						CityPoiModel cityPoiModel = new CityPoiModel(name, userModel, longitude, latitude);
-						Set<TagModel> tagModels = new HashSet<TagModel>();
-						for (String tag : tags) {
-							TagModel tagModel = new TagModel(tag);
-							tagModel.setPoi(simplePoiModel);
-							tagModels.add(tagModel);
+					if (poiRepository.findByName(name) == null) {
+						if (geokoordinateOk(latitude, longitude)) {
+							UserModel createdBy = userRepository.findByAdmin(userId);
+							CityPoiModel cityPoiModel = new CityPoiModel(name, createdBy, street, city, latitude, longitude);
+							List<PoiModel> poiModels = createdBy.getListOfManagedPois();
+							poiModels.add(cityPoiModel);
+							createdBy.setListOfManagedPois(poiModels);
+							Set<TagModel> tagModels = new HashSet<TagModel>();
+							for (String tag : tags) {
+								TagModel tagModel = new TagModel(tag);
+								tagModel.setPoi(cityPoiModel);
+								tagModels.add(tagModel);
+							}
+							cityPoiModel.setTags(tagModels);
+							simplePoiRepository.save(cityPoiModel);
+						} else {
+							log.warn("createCityPOI: Geokoordinaten liegen nicht im vorgegebenen Bereich.");
+							throw new IllegalArgumentException("Geokoordinaten liegen nicht im vorgegebenen Bereich.");
 						}
-						simplePoiModel.setTags(tagModels);
-						simplePoiRepository.save(simplePoiModel);*/
 					} else {
-						log.warn("createCityPOI: Geokoordinaten liegen nicht im vorgegebenen Bereich.");
-						throw new IllegalArgumentException("Geokoordinaten liegen nicht im vorgegebenen Bereich.");
+						log.warn("createCityPOI: CityPoi existiert schon.");
+						throw new IllegalArgumentException("CityPoi existiert schon.");
 					}
 				} else {
 					log.warn("createCityPOI: Nutzer hat keine Admin-Rechte.");
@@ -128,23 +145,35 @@ public class PoiServiceImpl implements PoiService {
 		if (userId != null) {
 			if (userRepository.findOne(userId) != null) {
 				if (userRepository.findByAdmin(userId) != null) {
-					if (geokoordinateOk(polygon)) {
-						List<CoordinateModel> coordinateModels = new ArrayList<CoordinateModel>();
-						for (int i = 0; i < polygon.toArray().length; i++) {
-							CoordinateModel coordinateModelTmp = new CoordinateModel(polygon.get(i).getLatitude(), polygon.get(i).getLongitude());
-							coordinateModels.add(coordinateModelTmp);
+					if (poiRepository.findByName(name) == null) {
+						if (geokoordinateOk(polygon)) {
+							UserModel createdBy = userRepository.findOne(userId);
+							PolygonPoiModel polygonPoiModel = new PolygonPoiModel(name, createdBy);
+							List<PoiModel> poiModels = createdBy.getListOfManagedPois();
+							poiModels.add(polygonPoiModel);
+							createdBy.setListOfManagedPois(poiModels);
+							List<CoordinateModel> coordinateModels = new ArrayList<CoordinateModel>();
+							for (Coordinate coordi : polygon) {
+								CoordinateModel coordinateModel = new CoordinateModel(coordi.getLatitude(), coordi.getLongitude());
+								coordinateModel.setPolygonPoi(polygonPoiModel);
+								coordinateModels.add(coordinateModel);
+							}
+							Set<TagModel> tagModels = new HashSet<TagModel>();
+							for (String tag : tags) {
+								TagModel tagModel = new TagModel(tag);
+								tagModel.setPoi(polygonPoiModel);
+								tagModels.add(tagModel);
+							}	
+							polygonPoiModel.setPolygon(coordinateModels);
+							polygonPoiModel.setTags(tagModels);
+							polygonPoiRepository.saveAndFlush(polygonPoiModel);
+						} else {
+							log.warn("createPolygonPOI: Geokoordinaten liegen nicht im vorgegebenen Bereich.");
+							throw new IllegalArgumentException("Geokoordinaten liegen nicht im vorgegebenen Bereich.");
 						}
-						UserModel user = userRepository.findOne(userId);
-						Set<TagModel> tagModels = new HashSet<TagModel>();
-						for (String tag : tags) {
-							TagModel tagModel = new TagModel(tag);
-							tagModels.add(tagModel);
-						}	
-						PolygonPoiModel polygonPoiModel = new PolygonPoiModel(name, tagModels, user, coordinateModels);
-						polygonPoiRepository.saveAndFlush(polygonPoiModel);
 					} else {
-						log.warn("createPolygonPOI: Geokoordinaten liegen nicht im vorgegebenen Bereich.");
-						throw new IllegalArgumentException("Geokoordinaten liegen nicht im vorgegebenen Bereich.");
+						log.warn("createPolygonPOI: PolygonPoi existiert schon.");
+						throw new IllegalArgumentException("PolygonPoi existiert schon.");
 					}
 				} else {
 					log.warn("createPolygonPOI: Nutzer hat keine Admin-Rechte.");
@@ -167,8 +196,10 @@ public class PoiServiceImpl implements PoiService {
 			if (userRepository.findOne(userId) != null) {
 				if (userRepository.findByAdmin(userId) != null) {
 					PoiModel poiModel = poiRepository.findByName(name);
-					System.out.println(poiRepository.count());
 					poiRepository.delete(poiModel);
+					UserModel userModel = userRepository.findOne(userId);
+					userModel.getListOfManagedPois().remove(userModel.getListOfManagedPois().indexOf(poiModel));
+					userRepository.saveAndFlush(userModel);
 				} else {
 					throw new AuthorizationException(userId);
 				}
@@ -190,10 +221,12 @@ public class PoiServiceImpl implements PoiService {
 					Set<TagModel> tags = poiModel.getTags();
 					TagModel tagModel = new TagModel(tag);
 					if (!tags.isEmpty()) {
+						System.out.println("Na gleich : " + tags.contains(tagModel));
 						if (!tags.contains(tagModel)) {
 							tags.add(tagModel);
 							poiModel.setTags(tags);
 							poiRepository.save(poiModel);
+							//System.out.println("hallo!" + tags.ge);
 						} else {
 							throw new IllegalArgumentException("Tag exsistiert schon.");
 						}
@@ -221,7 +254,6 @@ public class PoiServiceImpl implements PoiService {
 				if (userRepository.findByAdmin(userId) != null) {
 					if (poiRepository.findByName(name) != null) {
 						PoiModel poiModel = poiRepository.findByName(name);
-						//Hibernate.initialize(poiModel.getTags());
 						Set<TagModel> tags = poiModel.getTags();
 						TagModel tagModel = new TagModel(tag);
 						if (!tags.isEmpty()) {
@@ -230,10 +262,10 @@ public class PoiServiceImpl implements PoiService {
 								poiModel.setTags(tags);
 								poiRepository.saveAndFlush(poiModel);
 							} else {
-								throw new IllegalArgumentException("Tag exsistiert nicht.");
+								throw new IllegalArgumentException("Tag exsistiert nicht2.");
 							}
 						} else {
-							throw new IllegalArgumentException("Tag exsistiert nicht.");
+							throw new IllegalArgumentException("Tag exsistiert nicht1.");
 						}
 					} else {
 						throw new IllegalArgumentException("Poi existiert nicht.");
@@ -270,56 +302,37 @@ public class PoiServiceImpl implements PoiService {
 	@Override
 	@Transactional
 	public Poi getPoi(String name) {
+		Poi returnPoi = null;
 		if (poiRepository.findByName(name) != null) {
 			PoiModel poiModel = poiRepository.findByName(name);
 			if (poiModel instanceof CityPoiModel) {
 				CityPoiModel cityPoiModel = (CityPoiModel)poiModel;
 				Set<String> tags = new HashSet<String>();
-				System.out.println("jojo: " + cityPoiModel.getTags().size());
 				for (TagModel tagModel : cityPoiModel.getTags())
-					System.out.println("Hallo: " + tagModel.getTag());
+					tags.add(tagModel.getTag());
+				Poi cityPoi = new CityPoi(cityPoiModel.getName(), tags, cityPoiModel.getStreet(), cityPoiModel.getCity(), 
+											cityPoiModel.getLatitude(), cityPoiModel.getLongitude());
+				returnPoi = cityPoi;
 			} else if (poiModel instanceof SimplePoiModel) {
 				SimplePoiModel simplePoiModel = (SimplePoiModel)poiModel;
 				Set<String> tags = new HashSet<String>();
-				System.out.println("jojo: " + simplePoiModel.getTags().size());
 				for (TagModel tagModel : simplePoiModel.getTags())
-					System.out.println("Hallo: " + tagModel.getTag());
+					tags.add(tagModel.getTag());
+				Poi simplePoi = new SimplePoi(simplePoiModel.getName(), tags, simplePoiModel.getLatitude(), simplePoiModel.getLongitude());
+				returnPoi = simplePoi;
+			} else if (poiModel instanceof PolygonPoiModel) {
+				PolygonPoiModel polygonPoiModel = (PolygonPoiModel)poiModel;
+				Set<String> tags = new HashSet<String>();
+				for (TagModel tagModel : polygonPoiModel.getTags())
+					tags.add(tagModel.getTag());
+				List<Coordinate> coordinates = new ArrayList<Coordinate>();
+				for (CoordinateModel coModel : polygonPoiModel.getPolygon())
+					coordinates.add(new Coordinate(coModel.getLatitude(), coModel.getLongitude()));
+				Poi polygonPoi = new PolygonPoi(polygonPoiModel.getName(), tags, coordinates);
+				returnPoi = polygonPoi;
 			}
-		} else
-			System.out.println("SCHEISSE!");
-		/*if (cityPoiRepository.findByName(name) != null) {
-			CityPoiModel cityPoiModel = cityPoiRepository.findByName(name);
-			Set<String> tags = new HashSet<String>();
-			for (TagModel tagModel : cityPoiModel.getTags())
-				tags.add(tagModel.getTag());
-			CityPoi cityPoi = new CityPoi(cityPoiModel.getName(), tags, cityPoiModel.getStreet(), 
-					cityPoiModel.getCity(), cityPoiModel.getLatitude(), cityPoiModel.getLongitude());
-			return cityPoi;
-		} else if (simplePoiRepository.findByName(name) != null) {
-			SimplePoiModel simplePoiModel = simplePoiRepository.findByName(name);
-			Set<String> tags = new HashSet<String>();
-			for (TagModel tagModel : simplePoiModel.getTags())
-				tags.add(tagModel.getTag());
-			SimplePoi simplePoi = new SimplePoi(simplePoiModel.getName(), tags, 
-					simplePoiModel.getLongitude(), simplePoiModel.getLatitude());
-			return simplePoi;
-		} else if (polygonPoiRepository.findByName(name) != null) {
-			PolygonPoiModel polygonPoiModel = polygonPoiRepository.findByName(name);
-			List<Coordinate> coordinate = new ArrayList<Coordinate>();
-			for (int i = 0; i < polygonPoiModel.getPolygon().size(); i++) {
-				Coordinate coordinateTmp = new Coordinate(polygonPoiModel.getPolygon().get(i).getLatitude(), 
-						polygonPoiModel.getPolygon().get(i).getLongitude());
-				coordinate.add(coordinateTmp);
-			}
-			Set<String> tags = new HashSet<String>();
-			for (TagModel tagModel : polygonPoiModel.getTags())
-				tags.add(tagModel.getTag());
-			PolygonPoi polygonPoi = new PolygonPoi(polygonPoiModel.getName(), tags, coordinate);
-			return polygonPoi;
-		} else
-			return null;
-			*/
-		return null;
+		}
+		return returnPoi;
 	}
 	
 	@Override

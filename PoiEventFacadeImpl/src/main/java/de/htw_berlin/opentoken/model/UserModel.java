@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -33,11 +34,10 @@ public class UserModel implements Serializable {
 	@ManyToMany
 	private Set<EventModel> subscriptFor;
 	
-	@OneToMany(mappedBy="createdBy")
-	private List<PoiModel> poi;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="createdBy")
+	private List<PoiModel> listOfManagedPois;
 	
-	public UserModel(){
-	}
+	public UserModel() {}
 	
 	public UserModel(String name, String firstname, String email) {
 		this.createUser(name, firstname, email);
@@ -50,10 +50,12 @@ public class UserModel implements Serializable {
 		this.admin = false;
 		return userId;
 	}
+	
 	public Long getUserId()
 	{
 		return userId;
 	}
+	
 	public String getName() {
 		return name;
 	}
@@ -85,20 +87,32 @@ public class UserModel implements Serializable {
 	public void setAdmin(Boolean admin) {
 		this.admin = admin;
 	}
+	
 	public Set<EventModel> getOwnedEvents()
 	{
 		return createdEvent;
 	}
+	
 	public void addOwnedEvent(EventModel event)
 	{
 		createdEvent.add(event);
 	}
+	
 	public Set<EventModel> getSubscriptedEvent()
 	{
 		return subscriptFor;
 	}
+	
 	public void addSubscriptionFor(EventModel event)
 	{
 		subscriptFor.add(event);
+	}
+
+	public List<PoiModel> getListOfManagedPois() {
+		return listOfManagedPois;
+	}
+
+	public void setListOfManagedPois(List<PoiModel> listOfManagedPois) {
+		this.listOfManagedPois = listOfManagedPois;
 	}
 }

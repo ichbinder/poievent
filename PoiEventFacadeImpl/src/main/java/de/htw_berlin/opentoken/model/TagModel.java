@@ -2,7 +2,6 @@ package de.htw_berlin.opentoken.model;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -23,7 +22,7 @@ public class TagModel implements Serializable {
 	
 	private String tag;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "poi_id")
 	private PoiModel howIsTheTagOfPoi;
 	
