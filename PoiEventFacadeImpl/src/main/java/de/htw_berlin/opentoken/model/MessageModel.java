@@ -6,6 +6,7 @@ import java.util.Calendar;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -26,6 +27,7 @@ public class MessageModel implements Comparable<MessageModel>,Serializable{
 	private Calendar angelegtAm;
 	
 	@ManyToOne
+	@JoinColumn(name = "event_message")
 	private EventModel event;
 	
 	public int compareTo(MessageModel compareObjekt)
@@ -67,5 +69,12 @@ public class MessageModel implements Comparable<MessageModel>,Serializable{
 	public void setDescription(String description) {
 		this.content = description;
 	}
-	
+	public void setIstBestandteilVonEvent(EventModel event)
+	{
+		this.event = event;
+	}
+	public EventModel getIstBestandteilVonEvent()
+	{
+		return event;
+	}
 }

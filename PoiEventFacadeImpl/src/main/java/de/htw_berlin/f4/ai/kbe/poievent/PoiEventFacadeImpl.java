@@ -44,6 +44,7 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 
 	public void deletePOI(Long userId, String name) {
 		poiService.deletePOI(userId, name);
+		
 	}
 
 	public void addPoiTag(Long userId, String name, String tag) {
@@ -58,7 +59,10 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 
 	public void deletePoiTag(Long userId, String name, String tag) {
 		if(hasAdminRole(userId))
+		{	
 			poiService.deletePoiTag(userId, name, tag);
+			
+		}
 		else
 		{
 			logger.error("User besitzt keine Adminrechte");
@@ -195,7 +199,8 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 	}
 
 	public Long createUser(String name, String firstname, String email) {
-		if(!userService.checkEmail(email))
+		boolean checkValue = userService.checkEmail(email);
+		if(!checkValue)
 			return userService.createUser(name, firstname, email);
 		else
 		{

@@ -12,6 +12,5 @@ public interface UserRepository extends JpaRepository<UserModel, Long>{
 	@Query("Select u from UserModel u where u.admin = true and u.userId = ?1")
 	UserModel findByAdmin(Long userid);
 	
-	@Query("Select u from UserModel u where u.email = ?1")
 	UserModel findByEmail(String email);
 }

@@ -17,6 +17,7 @@ import de.htw_berlin.opentoken.model.EventModel;
 import de.htw_berlin.opentoken.model.MessageModel;
 import de.htw_berlin.opentoken.model.UserModel;
 import de.htw_berlin.opentoken.springdatarepository.EventRepository;
+import de.htw_berlin.opentoken.springdatarepository.MessageRepository;
 import de.htw_berlin.opentoken.springdatarepository.PoiRepository;
 import de.htw_berlin.opentoken.springdatarepository.UserRepository;
 
@@ -33,6 +34,8 @@ public class InformationServiceImpl implements InformationService {
 	UserRepository userRepository;
 	@Autowired
 	EventRepository eventRepository;
+	@Autowired
+	MessageRepository messageRepository;
 	
 	@Override
 	@Transactional
@@ -99,9 +102,10 @@ public class InformationServiceImpl implements InformationService {
 		// TODO Auto-generated method stub
 		Set<Event> temp = new HashSet<Event>();
 		Set<EventModel> eventModelList = userRepository.findOne(userId).getSubscriptedEvent();
-		Event tempEvent = new Event();
+
 		for(EventModel i : eventModelList)
 		{	
+			Event tempEvent = new Event();
 			tempEvent.setTitle(i.getTitle());
 			tempEvent.setDate(i.getDate());
 			tempEvent.setDescription(i.getDescription());
@@ -183,6 +187,9 @@ public class InformationServiceImpl implements InformationService {
 		EventModel eventModel = eventRepository.findOne(eventId);
 		eventModel.addMessage(messageModel);
 		eventRepository.saveAndFlush(eventModel);
+		messageModel.setIstBestandteilVonEvent(eventModel);
+		messageRepository.saveAndFlush(messageModel);
+		
 	}
 
 	@Override
