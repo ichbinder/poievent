@@ -40,12 +40,12 @@ public class InformationServiceImpl implements InformationService {
 	@Override
 	@Transactional
 	public long erstelleEvent(Long userId, String title, String description) {
-		EventModel eventModel = new EventModel(title, description,userRepository.findOne(userId));
+		EventModel eventModel = new EventModel(title, description, userRepository.findOne(userId));
 		UserModel userModel = userRepository.findOne(userId);
 		userModel.addOwnedEvent(eventModel);
 		
-		eventRepository.saveAndFlush(eventModel);
-		userRepository.saveAndFlush(userModel);
+		eventRepository.save(eventModel);
+		userRepository.save(userModel);
 		
 		logger.info("Event mit den Daten erstellt und Event dem User hinzugefügt");
 		return eventModel.getEventId();	

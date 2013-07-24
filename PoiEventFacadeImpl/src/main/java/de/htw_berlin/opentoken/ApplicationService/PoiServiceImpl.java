@@ -199,14 +199,27 @@ public class PoiServiceImpl implements PoiService {
 			if (userRepository.findOne(userId) != null) {
 				if (userRepository.findByAdmin(userId) != null) {
 					PoiModel poiModel = poiRepository.findByName(name);
-					Set<EventModel> tempModels = poiModel.getEvents();
-					userModel tempuser2 = tempModels.get
-					for (EventModel eventModeltmp : tempModels) {
-						UserModel tempUser = userRepository.findOne(eventModeltmp.getCreatedBy().getUserId());
-						tempUser.getCreatedEvent().removeAll(tempModels);
-						userRepository.saveAndFlush(tempUser);
+					//--
+					
+					Set<EventModel> eventModels = new HashSet<EventModel>();
+					eventModels = poiModel.getEvents();
+					UserModel userEventRemove = new UserModel();
+					System.out.println("User Events out: " + eventModels.size());
+					for (EventModel eventModeltmp : eventModels) {
+						//System.out.println("#### Out: " + eventModeltmp.getTitle());
+						userEventRemove = userRepository.findOne(eventModeltmp.getOwner().getUserId());
+						System.out.println("User Events out: " + userEventRemove.getCreatedEvent().size());
+						for (EventModel eventModel : userEventRemove.getCreatedEvent()) {
+							System.out.println("Was hat der user: " + eventModel.getTitle());
+						}
+						
+						//userEventRemove.getCreatedEvent().remove(eventModeltmp);
+						//userRepository.save(userEventRemove);
 					}
-
+					
+					
+					
+					//--
 					UserModel userModel = userRepository.findOne(userId);
 					userModel.getListOfManagedPois().remove(userModel.getListOfManagedPois().indexOf(poiModel));
 					userRepository.save(userModel);		
@@ -361,10 +374,10 @@ public class PoiServiceImpl implements PoiService {
 			PoiModel poiModel = poiRepository.findByName(poiName);
 			Set<EventModel> eventModels = new HashSet<EventModel>();
 			eventModels.addAll(poiModel.getEvents());
-			//EventModel eventModel = new EventModel(event.getTitle(), event.getDescription(), createdBy);
-			//eventModel.setHowIsTheEventOfPoi(poiModel);
-			//eventRepository.save(eventModel);
-			//eventModels.add(eventModel);
+			EventModel eventModel = eventRepository.findOne(eventId);
+			eventModel.setHowIsTheEventOfPoi(poiModel);
+			eventRepository.save(eventModel);
+			eventModels.add(eventModel);
 			poiModel.setEvents(eventModels);
 			poiRepository.save(poiModel);
 		} else 
