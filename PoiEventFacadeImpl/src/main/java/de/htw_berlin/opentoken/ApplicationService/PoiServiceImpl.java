@@ -206,15 +206,9 @@ public class PoiServiceImpl implements PoiService {
 					UserModel userEventRemove = new UserModel();
 					System.out.println("User Events out: " + eventModels.size());
 					for (EventModel eventModeltmp : eventModels) {
-						//System.out.println("#### Out: " + eventModeltmp.getTitle());
 						userEventRemove = userRepository.findOne(eventModeltmp.getOwner().getUserId());
-						System.out.println("User Events out: " + userEventRemove.getCreatedEvent().size());
-						for (EventModel eventModel : userEventRemove.getCreatedEvent()) {
-							System.out.println("Was hat der user: " + eventModel.getTitle());
-						}
-						
-						//userEventRemove.getCreatedEvent().remove(eventModeltmp);
-						//userRepository.save(userEventRemove);
+						userEventRemove.getCreatedEvent().remove(eventModeltmp);
+						userRepository.save(userEventRemove);
 					}
 					
 					
