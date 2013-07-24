@@ -31,7 +31,7 @@ public interface PoiService {
 
 	boolean validatePoi(String name);
 
-	void addEvent(Event event, UserModel createdBy, String poiName);
+	void addEvent(long eventId, UserModel createdBy, String poiName);
 
 	Set<Event> getAllEventsByPoi(String poiName);
 

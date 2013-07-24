@@ -87,7 +87,7 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 			{	
 				eventId = informationService.erstelleEvent(userId, title, description);
 				event = informationService.getEventByEventId(eventId);
-				poiService.addEvent(event,userService.getUserById(userId), poiName);
+				poiService.addEvent(eventId,userService.getUserById(userId), poiName);
 			}	
 			else
 			{
