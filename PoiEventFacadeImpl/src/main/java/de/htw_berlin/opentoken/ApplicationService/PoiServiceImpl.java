@@ -219,14 +219,19 @@ public class PoiServiceImpl implements PoiService {
 				if (userRepository.findByAdmin(userId) != null) {
 					PoiModel poiModel = poiRepository.findByName(name);
 					Set<TagModel> tags = poiModel.getTags();
-					TagModel tagModel = new TagModel(tag);
+					TagModel tagModel = new TagModel(tag, poiModel);
 					if (!tags.isEmpty()) {
-						System.out.println("Na gleich : " + tags.contains(tagModel));
-						if (!tags.contains(tagModel)) {
+						boolean tagExists = false;
+						for (TagModel tagModelTmp : tags) {
+							if (tagModelTmp.getTag().equals(tagModel.getTag())) {
+								tagExists = true;
+								break;
+							}
+						}
+						if (!tagExists) {
 							tags.add(tagModel);
 							poiModel.setTags(tags);
 							poiRepository.save(poiModel);
-							//System.out.println("hallo!" + tags.ge);
 						} else {
 							throw new IllegalArgumentException("Tag exsistiert schon.");
 						}
@@ -255,17 +260,25 @@ public class PoiServiceImpl implements PoiService {
 					if (poiRepository.findByName(name) != null) {
 						PoiModel poiModel = poiRepository.findByName(name);
 						Set<TagModel> tags = poiModel.getTags();
-						TagModel tagModel = new TagModel(tag);
+						TagModel tagModel = new TagModel(tag, poiModel);
 						if (!tags.isEmpty()) {
-							if (tags.contains(tagModel)) {
-								tags.remove(tagModel);
+							boolean tagExists = false;
+							for (TagModel tagModelTmp : tags) {
+								if (tagModelTmp.getTag().equals(tagModel.getTag())) {
+									tags.remove(tagModelTmp);
+									tagRepository.delete(tagModelTmp);
+									tagExists = true;
+									break;
+								}
+							}
+							if (tagExists) {
 								poiModel.setTags(tags);
-								poiRepository.saveAndFlush(poiModel);
+								poiRepository.save(poiModel);
 							} else {
-								throw new IllegalArgumentException("Tag exsistiert nicht2.");
+								throw new IllegalArgumentException("Tag exsistiert nicht.");
 							}
 						} else {
-							throw new IllegalArgumentException("Tag exsistiert nicht1.");
+							throw new IllegalArgumentException("Es existieren keine Tags in dem Poi.");
 						}
 					} else {
 						throw new IllegalArgumentException("Poi existiert nicht.");
@@ -284,19 +297,14 @@ public class PoiServiceImpl implements PoiService {
 	@Override
 	@Transactional
 	public Set<Poi> getPoiByTag(String tag) {
-		/*List<PoiModel> poiModels = poiRepository.findAll();
-		Set<Poi> poiSet = new HashSet<Poi>();
-		for (int i = 0; i < poiModels.size(); i++) {
-			Set<String> tagsTmp = poiModels.get(i).getTags();
-			for (int j = 0; j < tagsTmp.size(); j++) {
-				if (tagsTmp.contains(tag)) {
-					
-					Poi poi = new 
-					poiSet.add(poiModels.get(i));
-				}
-			}
-		}*/
-		return null;
+		List<TagModel> tagModels =  tagRepository.findByTag(tag);
+		Set<Poi> returnPois = new HashSet<Poi>();
+		for (TagModel tagModel : tagModels)
+			returnPois.add(this.getPoi(tagModel.getPoi().getName()));
+		if (returnPois.isEmpty())
+			return null;
+		else
+			return returnPois;
 	}
 
 	@Override

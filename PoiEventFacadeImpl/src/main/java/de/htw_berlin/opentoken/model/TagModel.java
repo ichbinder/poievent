@@ -11,9 +11,6 @@ import javax.persistence.ManyToOne;
 @Entity
 public class TagModel implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -1291742894137432368L;
 
 	@Id 
@@ -26,12 +23,17 @@ public class TagModel implements Serializable {
 	@JoinColumn(name = "poi_id")
 	private PoiModel howIsTheTagOfPoi;
 	
-	public TagModel() {}
-	
+	public TagModel(String tag, PoiModel howIsTheTagOfPoi) {
+		this(tag);
+		this.howIsTheTagOfPoi = howIsTheTagOfPoi;
+	}	
+
 	public TagModel(String tag) {
 		this.tag = tag;
 	}
 
+	public TagModel() {}
+	
 	public String getTag() {
 		return tag;
 	}
