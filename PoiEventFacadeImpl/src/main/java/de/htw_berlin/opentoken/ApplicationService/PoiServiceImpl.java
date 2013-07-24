@@ -198,12 +198,21 @@ public class PoiServiceImpl implements PoiService {
 		if (userId != null) {
 			if (userRepository.findOne(userId) != null) {
 				if (userRepository.findByAdmin(userId) != null) {
-					PoiModel poiModel = poiRepository.findByName(name);				
-					poiRepository.delete(poiModel);
+					PoiModel poiModel = poiRepository.findByName(name);
+					Set<EventModel> eventModels = new HashSet<EventModel>();
+					eventModels = poiModel.getEvents();
+					UserModel userEventRemove = new UserModel();
+					for (EventModel eventModeltmp : eventModels) {
+						userEventRemove = userRepository.findOne(eventModeltmp.getOwner().getUserId());
+						
+						userEventRemove.getCreatedEvent().remove(eventModeltmp);
+					}
+					System.out.println("User Events out: " + userEventRemove.getCreatedEvent().size());
+					userRepository.save(userEventRemove);
 					UserModel userModel = userRepository.findOne(userId);
 					userModel.getListOfManagedPois().remove(userModel.getListOfManagedPois().indexOf(poiModel));
-					userRepository.saveAndFlush(userModel);
-					
+					userRepository.save(userModel);		
+					poiRepository.delete(poiModel);
 				} else {
 					throw new AuthorizationException(userId);
 				}

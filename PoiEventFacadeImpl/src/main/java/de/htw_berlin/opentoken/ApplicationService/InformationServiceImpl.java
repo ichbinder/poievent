@@ -54,7 +54,7 @@ public class InformationServiceImpl implements InformationService {
 	@Override
 	@Transactional
 	public Long istBesitzerVon(Long eventId) {
-		// TODO Auto-generated method stub
+		
 		EventModel eventModel = eventRepository.findOne(eventId);
 		logger.info("Event per EventId gesucht");
 		return eventModel.getOwner().getUserId();
@@ -63,7 +63,7 @@ public class InformationServiceImpl implements InformationService {
 	@Override
 	@Transactional
 	public void loescheEvent(Long eventId) {
-		// TODO Auto-generated method stub
+		
 		eventRepository.delete(eventId);
 		logger.info("Event per EventId gelöscht");
 	}
@@ -71,7 +71,7 @@ public class InformationServiceImpl implements InformationService {
 	@Override
 	@Transactional
 	public boolean validateEvent(Long eventId) {
-		// TODO Auto-generated method stub
+		
 		boolean checkEvent = false;
 		EventModel eventModel = eventRepository.findOne(eventId);
 		if(eventModel != null)
@@ -85,7 +85,7 @@ public class InformationServiceImpl implements InformationService {
 	@Override
 	@Transactional
 	public void addUserToEvent(Long userId, Long eventId) {
-		// TODO Auto-generated method stub
+		
 		EventModel eventModel = eventRepository.findOne(eventId);
 		UserModel userModel = userRepository.findOne(userId);
 		eventModel.addSubscribtion(userModel);
@@ -99,7 +99,7 @@ public class InformationServiceImpl implements InformationService {
 	@Override
 	@Transactional
 	public Set<Event> findSubscribedEventsBy(Long userId) {
-		// TODO Auto-generated method stub
+		
 		Set<Event> temp = new HashSet<Event>();
 		Set<EventModel> eventModelList = userRepository.findOne(userId).getSubscriptedEvent();
 
@@ -119,10 +119,9 @@ public class InformationServiceImpl implements InformationService {
 	@Override
 	@Transactional
 	public Set<Event> findOwnedEventsBy(Long userId) {
-		// TODO Auto-generated method stub
 		Set<Event> temp = new HashSet<Event>();
 		Set<EventModel> eventModelList = userRepository.findOne(userId).getOwnedEvents();
-
+		System.out.println("Wie Viel: " + eventModelList.size());
 		for(EventModel i : eventModelList)
 		{	
 			Event tempEvent = new Event();
@@ -132,13 +131,14 @@ public class InformationServiceImpl implements InformationService {
 			
 			temp.add(tempEvent);
 		}
+		System.out.println("Wie Viel2: " + temp.size());
 		return temp;
 	}
 
 	@Override
 	@Transactional
 	public List<Message> getMessage(Long eventId) {
-		// TODO Auto-generated method stub
+		
 		List<Message> temp = new ArrayList<Message>();
 		List<MessageModel> tempModel = new ArrayList<MessageModel>();
 		Message buffer = new Message();
@@ -166,7 +166,7 @@ public class InformationServiceImpl implements InformationService {
 	@Override
 	@Transactional
 	public boolean isPartInEvent(Long eventId, Long userId) {
-		// TODO Auto-generated method stub
+		
 		boolean checkValue = false;
 		EventModel eventModel = eventRepository.findOne(eventId);
 		Set<UserModel> setSubscribed = eventModel.getSubscribted();
@@ -182,7 +182,7 @@ public class InformationServiceImpl implements InformationService {
 	@Override
 	@Transactional
 	public void addMessage(Long eventId, String title, String content) {
-		// TODO Auto-generated method stub
+		
 		MessageModel messageModel = new MessageModel(title, content);
 		EventModel eventModel = eventRepository.findOne(eventId);
 		eventModel.addMessage(messageModel);
@@ -194,7 +194,7 @@ public class InformationServiceImpl implements InformationService {
 
 	@Override
 	public Event getEventByEventId(Long eventId) {
-		// TODO Auto-generated method stub
+		
 		EventModel eventModel = eventRepository.findOne(eventId);
 		Event temp = new Event();
 		

@@ -18,9 +18,6 @@ import javax.persistence.OneToMany;
 @Entity
 public class EventModel implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -2628919549657024832L;
 
 	@Id 

@@ -115,4 +115,26 @@ public class UserModel implements Serializable {
 	public void setListOfManagedPois(List<PoiModel> listOfManagedPois) {
 		this.listOfManagedPois = listOfManagedPois;
 	}
+
+	public Set<EventModel> getCreatedEvent() {
+		return createdEvent;
+	}
+
+	public void setCreatedEvent(Set<EventModel> createdEvent) {
+		this.createdEvent = createdEvent;
+	}
+
+	public Set<EventModel> getSubscriptFor() {
+		return subscriptFor;
+	}
+
+	public void setSubscriptFor(Set<EventModel> subscriptFor) {
+		this.subscriptFor = subscriptFor;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+	
+	
 }
