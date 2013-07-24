@@ -198,11 +198,12 @@ public class PoiServiceImpl implements PoiService {
 		if (userId != null) {
 			if (userRepository.findOne(userId) != null) {
 				if (userRepository.findByAdmin(userId) != null) {
-					PoiModel poiModel = poiRepository.findByName(name);
+					PoiModel poiModel = poiRepository.findByName(name);				
 					poiRepository.delete(poiModel);
 					UserModel userModel = userRepository.findOne(userId);
 					userModel.getListOfManagedPois().remove(userModel.getListOfManagedPois().indexOf(poiModel));
 					userRepository.saveAndFlush(userModel);
+					
 				} else {
 					throw new AuthorizationException(userId);
 				}
