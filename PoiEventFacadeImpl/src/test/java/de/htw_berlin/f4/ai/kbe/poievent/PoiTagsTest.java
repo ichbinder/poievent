@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.Test;
-
+/*
 public class PoiTagsTest extends TestInitWithPois{
 
 	private static final String UAS = "university of applied science";
@@ -55,4 +55,4 @@ public class PoiTagsTest extends TestInitWithPois{
 		
 	}
 	
-}
+}*/

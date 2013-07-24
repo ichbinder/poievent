@@ -28,7 +28,7 @@ public class UserModel implements Serializable {
 	
 	private Boolean admin;
 	
-	@OneToMany(mappedBy="createdBy")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="createdBy")
 	private Set<EventModel> createdEvent;
 	
 	@ManyToMany

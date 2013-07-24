@@ -12,9 +12,6 @@ import javax.persistence.ManyToOne;
 @Entity
 public class MessageModel implements Comparable<MessageModel>,Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -8946294835230325509L;
 
 	@Id 

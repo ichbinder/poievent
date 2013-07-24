@@ -26,6 +26,7 @@ import de.htw_berlin.opentoken.model.SimplePoiModel;
 import de.htw_berlin.opentoken.model.TagModel;
 import de.htw_berlin.opentoken.model.UserModel;
 import de.htw_berlin.opentoken.springdatarepository.CityPoiRepository;
+import de.htw_berlin.opentoken.springdatarepository.EventRepository;
 import de.htw_berlin.opentoken.springdatarepository.PoiRepository;
 import de.htw_berlin.opentoken.springdatarepository.PolygonPoiRepository;
 import de.htw_berlin.opentoken.springdatarepository.SimplePoiRepository;
@@ -49,6 +50,8 @@ public class PoiServiceImpl implements PoiService {
 	UserRepository userRepository;
 	@Autowired
 	TagRepository tagRepository;
+	@Autowired
+	EventRepository eventRepository;
 	
 	@Override
 	@Transactional
@@ -351,9 +354,11 @@ public class PoiServiceImpl implements PoiService {
 			Set<EventModel> eventModels = new HashSet<EventModel>();
 			eventModels.addAll(poiModel.getEvents());
 			EventModel eventModel = new EventModel(event.getTitle(), event.getDescription(), createdBy);
+			eventModel.setHowIsTheEventOfPoi(poiModel);
+			eventRepository.save(eventModel);
 			eventModels.add(eventModel);
 			poiModel.setEvents(eventModels);
-			poiRepository.saveAndFlush(poiModel);
+			poiRepository.save(poiModel);
 		} else 
 			throw new IllegalArgumentException("Poi existiert nicht.");
 	}

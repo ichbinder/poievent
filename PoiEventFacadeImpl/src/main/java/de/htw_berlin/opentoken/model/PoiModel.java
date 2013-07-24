@@ -33,7 +33,7 @@ public abstract class PoiModel implements Serializable{
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "howIsTheTagOfPoi")
 	protected Set<TagModel> tags;
 	
-	@OneToMany(mappedBy="poi")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="howIsTheEventOfPoi")
 	protected Set<EventModel> events;
 
 	public String getName() {

@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -33,6 +34,7 @@ public class EventModel implements Serializable{
 	private Calendar date;
 	
 	@ManyToOne
+	@JoinColumn(name = "user_id")
 	private UserModel createdBy;
 	
 	@ManyToMany(fetch=FetchType.EAGER, mappedBy="subscriptFor")
@@ -42,11 +44,10 @@ public class EventModel implements Serializable{
 	private List<MessageModel> messages;
 
 	@ManyToOne
-	private PoiModel poi;
+	@JoinColumn(name = "poi_id")
+	private PoiModel howIsTheEventOfPoi;
 
-	public EventModel() {
-		// TODO Auto-generated constructor stub
-	}
+	public EventModel() {}
 	
 	public EventModel(String title,String description,UserModel createdBy)
 	{
@@ -98,6 +99,7 @@ public class EventModel implements Serializable{
 	public Set<UserModel> getSubscribted(){
 		return subscribedBy;
 	}
+	
 	public void addMessage(MessageModel message)
 	{
 		messages.add(message);
@@ -111,5 +113,37 @@ public class EventModel implements Serializable{
 	}
 	public void setCreatedBy(UserModel createdBy) {
 		this.createdBy = createdBy;
+	}
+
+	public Set<UserModel> getSubscribedBy() {
+		return subscribedBy;
+	}
+
+	public void setSubscribedBy(Set<UserModel> subscribedBy) {
+		this.subscribedBy = subscribedBy;
+	}
+
+	public List<MessageModel> getMessages() {
+		return messages;
+	}
+
+	public void setMessages(List<MessageModel> messages) {
+		this.messages = messages;
+	}
+
+	public PoiModel getHowIsTheEventOfPoi() {
+		return howIsTheEventOfPoi;
+	}
+
+	public void setHowIsTheEventOfPoi(PoiModel howIsTheEventOfPoi) {
+		this.howIsTheEventOfPoi = howIsTheEventOfPoi;
+	}
+
+	public void setEventId(Long eventId) {
+		this.eventId = eventId;
+	}
+
+	public void setDate(Calendar date) {
+		this.date = date;
 	}
 }

@@ -147,7 +147,7 @@ public class InformationServiceImpl implements InformationService {
 		
 		if(tempModel.isEmpty())
 		{
-			temp = null;
+			//temp = null; //<- kein null zurück geben! Sonst schlägt der test fail.
 		}
 		else
 		{
