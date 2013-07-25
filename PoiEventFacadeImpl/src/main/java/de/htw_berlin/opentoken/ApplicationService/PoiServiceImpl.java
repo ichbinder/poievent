@@ -75,24 +75,25 @@ public class PoiServiceImpl implements PoiService {
 							}
 							simplePoiModel.setTags(tagModels);
 							simplePoiRepository.save(simplePoiModel);
+							log.info("createSimplePOI: SimpelPoi erfolgreich angelegt.");
 						} else {
-							log.warn("createSimplePOI: Geokoordinaten liegen nicht im vorgegebenen Bereich.");
+							log.error("createSimplePOI: Geokoordinaten liegen nicht im vorgegebenen Bereich.");
 							throw new IllegalArgumentException("Geokoordinaten liegen nicht im vorgegebenen Bereich.");
 						}
 					} else {
-						log.warn("createSimplePOI: SimplePoi existiert schon.");
+						log.error("createSimplePOI: SimplePoi existiert schon.");
 						throw new IllegalArgumentException("SimplePoi existiert schon.");
 					}
 				} else {
-					log.warn("createSimplePOI: Nutzer hat keine Admin-Rechte.");
+					log.error("createSimplePOI: Nutzer hat keine Admin-Rechte.");
 					throw new AuthorizationException(userId);
 				}
 			} else {
-				log.warn("createSimplePOI: Nutzer existiert nicht.");
+				log.error("createSimplePOI: Nutzer existiert nicht.");
 				throw new IllegalArgumentException("Nutzer existiert nicht.");
 			}
 		} else {
-			log.warn("createSimplePOI: Nutzer existiert nicht.");
+			log.error("createSimplePOI: Nutzer existiert nicht.");
 			throw new IllegalArgumentException("Nutzer existiert nicht.");
 		}
 	}
@@ -118,25 +119,26 @@ public class PoiServiceImpl implements PoiService {
 								tagModels.add(tagModel);
 							}
 							cityPoiModel.setTags(tagModels);
-							simplePoiRepository.save(cityPoiModel);
+							cityPoiRepository.save(cityPoiModel);
+							log.info("createCityPOI: CityPoi erfolgreich angelegt.");
 						} else {
-							log.warn("createCityPOI: Geokoordinaten liegen nicht im vorgegebenen Bereich.");
+							log.error("createCityPOI: Geokoordinaten liegen nicht im vorgegebenen Bereich.");
 							throw new IllegalArgumentException("Geokoordinaten liegen nicht im vorgegebenen Bereich.");
 						}
 					} else {
-						log.warn("createCityPOI: CityPoi existiert schon.");
+						log.error("createCityPOI: CityPoi existiert schon.");
 						throw new IllegalArgumentException("CityPoi existiert schon.");
 					}
 				} else {
-					log.warn("createCityPOI: Nutzer hat keine Admin-Rechte.");
+					log.error("createCityPOI: Nutzer hat keine Admin-Rechte.");
 					throw new AuthorizationException(userId);
 				}
 			} else {
-				log.warn("createCityPOI: Nutzer existiert nicht.");
+				log.error("createCityPOI: Nutzer existiert nicht.");
 				throw new IllegalArgumentException("Nutzer existiert nicht.");
 			}
 		} else {
-			log.warn("createCityPOI: Nutzer existiert nicht.");
+			log.error("createCityPOI: Nutzer existiert nicht.");
 			throw new IllegalArgumentException("Nutzer existiert nicht.");
 		}
 	}
@@ -170,24 +172,25 @@ public class PoiServiceImpl implements PoiService {
 							polygonPoiModel.setPolygon(coordinateModels);
 							polygonPoiModel.setTags(tagModels);
 							polygonPoiRepository.saveAndFlush(polygonPoiModel);
+							log.info("createPolygonPOI: PolygonPoi erfolgreich angelegt.");
 						} else {
-							log.warn("createPolygonPOI: Geokoordinaten liegen nicht im vorgegebenen Bereich.");
+							log.error("createPolygonPOI: Geokoordinaten liegen nicht im vorgegebenen Bereich.");
 							throw new IllegalArgumentException("Geokoordinaten liegen nicht im vorgegebenen Bereich.");
 						}
 					} else {
-						log.warn("createPolygonPOI: PolygonPoi existiert schon.");
+						log.error("createPolygonPOI: PolygonPoi existiert schon.");
 						throw new IllegalArgumentException("PolygonPoi existiert schon.");
 					}
 				} else {
-					log.warn("createPolygonPOI: Nutzer hat keine Admin-Rechte.");
+					log.error("createPolygonPOI: Nutzer hat keine Admin-Rechte.");
 					throw new AuthorizationException(userId);
 				}
 			} else {
-				log.warn("createPolygonPOI: Nutzer existiert nicht.");
+				log.error("createPolygonPOI: Nutzer existiert nicht.");
 				throw new IllegalArgumentException("Nutzer existiert nicht.");
 			}
 		} else {
-			log.warn("createPolygonPOI: Nutzer existiert nicht.");
+			log.error("createPolygonPOI: Nutzer existiert nicht.");
 			throw new IllegalArgumentException("Nutzer existiert nicht.");
 		}
 	}
@@ -199,8 +202,6 @@ public class PoiServiceImpl implements PoiService {
 			if (userRepository.findOne(userId) != null) {
 				if (userRepository.findByAdmin(userId) != null) {
 					PoiModel poiModel = poiRepository.findByName(name);
-					//--
-					
 					Set<EventModel> eventModels = new HashSet<EventModel>();
 					eventModels = poiModel.getEvents();
 					UserModel userEventRemove = new UserModel();
@@ -210,21 +211,21 @@ public class PoiServiceImpl implements PoiService {
 						userEventRemove.getCreatedEvent().remove(eventModeltmp);
 						userRepository.save(userEventRemove);
 					}
-					
-					
-					
-					//--
 					UserModel userModel = userRepository.findOne(userId);
 					userModel.getListOfManagedPois().remove(userModel.getListOfManagedPois().indexOf(poiModel));
 					userRepository.save(userModel);		
 					poiRepository.delete(poiModel);
+					log.info("deletePOI: Poi wurde gelöscht.");
 				} else {
+					log.error("createPolygonPOI: Nutzer hat keine Admin-Rechte.");
 					throw new AuthorizationException(userId);
 				}
 			} else {
+				log.error("createPolygonPOI: Nutzer existiert nicht.");
 				throw new IllegalArgumentException("Nutzer existiert nicht.");
 			}
 		} else {
+			log.error("createPolygonPOI: Nutzer existiert nicht.");
 			throw new IllegalArgumentException("Nutzer existiert nicht.");
 		}
 	}
@@ -250,21 +251,27 @@ public class PoiServiceImpl implements PoiService {
 							tags.add(tagModel);
 							poiModel.setTags(tags);
 							poiRepository.save(poiModel);
+							log.info("addPoiTag: Tag wurde dem Poi hinzugefügt.");
 						} else {
+							log.error("addPoiTag: Tag exsistiert schon.");
 							throw new IllegalArgumentException("Tag exsistiert schon.");
 						}
 					} else {
 						tags.add(tagModel);
 						poiModel.setTags(tags);
 						poiRepository.saveAndFlush(poiModel);
+						log.info("addPoiTag: Tag wurde dem Poi hinzugefügt.");
 					}
 				} else {
+					log.error("createPolygonPOI: Nutzer hat keine Admin-Rechte.");
 					throw new AuthorizationException(userId);
 				}
 			} else {
+				log.error("createPolygonPOI: Nutzer existiert nicht.");
 				throw new IllegalArgumentException("Nutzer existiert nicht.");
 			}
 		} else {
+			log.error("createPolygonPOI: Nutzer existiert nicht.");
 			throw new IllegalArgumentException("Nutzer existiert nicht.");
 		}
 	}
@@ -292,22 +299,29 @@ public class PoiServiceImpl implements PoiService {
 							if (tagExists) {
 								poiModel.setTags(tags);
 								poiRepository.save(poiModel);
+								log.info("deletePoiTag: Tag wurde gelöscht.");
 							} else {
+								log.error("deletePoiTag: Tag exsistiert nicht.");
 								throw new IllegalArgumentException("Tag exsistiert nicht.");
 							}
 						} else {
-							throw new IllegalArgumentException("Es existieren keine Tags in dem Poi.");
+							log.error("deletePoiTag: Es existieren keine Tags in diesem Poi.");
+							throw new IllegalArgumentException("Es existieren keine Tags in diesem Poi.");
 						}
 					} else {
+						log.error("deletePoiTag: Poi existiert nicht.");
 						throw new IllegalArgumentException("Poi existiert nicht.");
 					}
 				} else {
+					log.error("deletePoiTag: Nutzer hat keine Admin-Rechte.");
 					throw new AuthorizationException(userId);
 				}
 			} else {
+				log.error("deletePoiTag: Nutzer existiert nicht.");
 				throw new IllegalArgumentException("Nutzer existiert nicht.");
 			}
 		} else {
+			log.error("deletePoiTag: Nutzer existiert nicht.");
 			throw new IllegalArgumentException("Nutzer existiert nicht.");
 		}
 	}
@@ -319,10 +333,13 @@ public class PoiServiceImpl implements PoiService {
 		Set<Poi> returnPois = new HashSet<Poi>();
 		for (TagModel tagModel : tagModels)
 			returnPois.add(this.getPoi(tagModel.getPoi().getName()));
-		if (returnPois.isEmpty())
+		if (returnPois.isEmpty()) {
+			log.info("getPoiByTag: kein Poi gefunden.");
 			return null;
-		else
+		} else {
+			log.info("getPoiByTag: Poi gefunden.");
 			return returnPois;
+		}
 	}
 
 	@Override
@@ -339,6 +356,7 @@ public class PoiServiceImpl implements PoiService {
 				Poi cityPoi = new CityPoi(cityPoiModel.getName(), tags, cityPoiModel.getStreet(), cityPoiModel.getCity(), 
 											cityPoiModel.getLatitude(), cityPoiModel.getLongitude());
 				returnPoi = cityPoi;
+				log.info("getPoi: Es wurde ein CityPoi gefunden.");
 			} else if (poiModel instanceof SimplePoiModel) {
 				SimplePoiModel simplePoiModel = (SimplePoiModel)poiModel;
 				Set<String> tags = new HashSet<String>();
@@ -346,6 +364,7 @@ public class PoiServiceImpl implements PoiService {
 					tags.add(tagModel.getTag());
 				Poi simplePoi = new SimplePoi(simplePoiModel.getName(), tags, simplePoiModel.getLatitude(), simplePoiModel.getLongitude());
 				returnPoi = simplePoi;
+				log.info("getPoi: Es wurde ein SimplePoi gefunden.");
 			} else if (poiModel instanceof PolygonPoiModel) {
 				PolygonPoiModel polygonPoiModel = (PolygonPoiModel)poiModel;
 				Set<String> tags = new HashSet<String>();
@@ -356,6 +375,7 @@ public class PoiServiceImpl implements PoiService {
 					coordinates.add(new Coordinate(coModel.getLatitude(), coModel.getLongitude()));
 				Poi polygonPoi = new PolygonPoi(polygonPoiModel.getName(), tags, coordinates);
 				returnPoi = polygonPoi;
+				log.info("getPoi: Es wurde ein PolygonPoi gefunden.");
 			}
 		}
 		return returnPoi;
@@ -363,19 +383,37 @@ public class PoiServiceImpl implements PoiService {
 	
 	@Override
 	@Transactional
-	public void addEvent(long eventId, UserModel createdBy, String poiName) {
-		if (poiRepository.findByName(poiName) != null) {
-			PoiModel poiModel = poiRepository.findByName(poiName);
-			Set<EventModel> eventModels = new HashSet<EventModel>();
-			eventModels.addAll(poiModel.getEvents());
-			EventModel eventModel = eventRepository.findOne(eventId);
-			eventModel.setHowIsTheEventOfPoi(poiModel);
-			eventRepository.save(eventModel);
-			eventModels.add(eventModel);
-			poiModel.setEvents(eventModels);
-			poiRepository.save(poiModel);
-		} else 
-			throw new IllegalArgumentException("Poi existiert nicht.");
+	public void addEventToPoi(long eventId, UserModel createdBy, String poiName) {
+		if (createdBy != null) {
+			if (userRepository.findOne(createdBy.getUserId()) != null) {
+				if (poiRepository.findByName(poiName) != null) {
+					if (eventRepository.findOne(eventId) != null) {
+						PoiModel poiModel = poiRepository.findByName(poiName);
+						Set<EventModel> eventModels = new HashSet<EventModel>();
+						eventModels.addAll(poiModel.getEvents());
+						EventModel eventModel = eventRepository.findOne(eventId);
+						eventModel.setHowIsTheEventOfPoi(poiModel);
+						eventRepository.save(eventModel);
+						eventModels.add(eventModel);
+						poiModel.setEvents(eventModels);
+						poiRepository.save(poiModel);
+						log.info("addEventToPoi: Event wurde zum Poi hinzugefügt.");
+					} else {
+						log.error("addEventToPoi: Event existiert nicht.");
+						throw new IllegalArgumentException("Event existiert nicht.");
+					}
+				} else {
+					log.error("addEventToPoi: Poi existiert nicht.");
+					throw new IllegalArgumentException("Poi existiert nicht.");
+				}
+			} else {
+				log.error("addEventToPoi: User existiert nicht.");
+				throw new IllegalArgumentException("User existiert nicht.");
+			}
+		} else {
+			log.error("addEventToPoi: User existiert nicht.");
+			throw new IllegalArgumentException("User existiert nicht.");
+		}
 	}
 	
 	@Override
@@ -403,9 +441,11 @@ public class PoiServiceImpl implements PoiService {
 				event.setDate(eventI.getDate());
 				events.add(event);
 			}
-			
-		} else
+			log.info("getAllEventsByPoi: Events wurden gefunden.");
+		} else {
+			log.error("getAllEventsByPoi: Poi existiert nicht.");
 			throw new IllegalArgumentException("Poi existiert nicht.");
+		}
 		return events;
 	}
 	
