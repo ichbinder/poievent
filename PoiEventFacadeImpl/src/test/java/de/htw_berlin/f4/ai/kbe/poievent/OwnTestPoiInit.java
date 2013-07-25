@@ -21,8 +21,9 @@ public class OwnTestPoiInit extends OwnUserInit{
 	PoiRepository poiRepository;
 	
 	@Before
-	public void setup()
+	public void setUp()
 	{	
+		super.setUp();
 		poiName = "testPoi";		
 		
 		facadeImplTest.createSimplePOI(testAdmin, poiName, tagsInit(), 13.526187f, 52.457735f);
