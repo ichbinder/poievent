@@ -1,6 +1,7 @@
 package de.htw_berlin.f4.ai.kbe.poievent;
 
 
+import java.beans.EventSetDescriptor;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import de.htw_berlin.opentoken.ApplicationService.InformationService;
 import de.htw_berlin.opentoken.ApplicationService.PoiService;
 import de.htw_berlin.opentoken.ApplicationService.UserService;
+import de.htw_berlin.opentoken.springdatarepository.UserRepository;
 
 
 public class PoiEventFacadeImpl implements PoiEventFacade{
@@ -85,7 +87,7 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 			if(userService.validateUser(userId))
 			{	
 				eventId = informationService.erstelleEvent(userId, title, description);
-				poiService.addEvent(eventId,userService.getUserById(userId), poiName);
+				poiService.addEventToPoi(eventId,userService.getUserById(userId), poiName);
 			}	
 			else
 			{
@@ -109,6 +111,7 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 				if(hasAdminRole(userId) || userId == informationService.istBesitzerVon(eventId))
 				{	
 					informationService.loescheEvent(eventId);
+
 				}
 				else
 				{

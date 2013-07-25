@@ -4,13 +4,14 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import de.htw_berlin.opentoken.model.PoiModel;
 import de.htw_berlin.opentoken.springdatarepository.PoiRepository;
 
+@Ignore
 public class OwnTestPoiInit extends OwnUserInit{
 	
 	PoiModel musterPoi;
@@ -21,9 +22,7 @@ public class OwnTestPoiInit extends OwnUserInit{
 	
 	@Before
 	public void setup()
-	{
-		super.setUp();
-		
+	{	
 		poiName = "testPoi";		
 		
 		facadeImplTest.createSimplePOI(testAdmin, poiName, tagsInit(), 13.526187f, 52.457735f);
@@ -34,10 +33,5 @@ public class OwnTestPoiInit extends OwnUserInit{
 	{
 		Set<String> temp = new HashSet<String>(Arrays.asList("Tag1", "Tag2"));
 		return temp;
-	}
-	@After
-	public void tearDown()
-	{
-		facadeImplTest.deletePOI(testAdmin, "testPoi");
 	}
 }

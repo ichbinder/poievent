@@ -19,7 +19,7 @@ public interface UserService {
 	void deleteUserById(Long userId);
 
 	void deleteUserByEmail(String email);
-
+	
 	boolean validateEmail(String email);
 
 	boolean checkEmail(String email);

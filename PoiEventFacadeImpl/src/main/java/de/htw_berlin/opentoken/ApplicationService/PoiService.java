@@ -6,6 +6,7 @@ import java.util.Set;
 import de.htw_berlin.f4.ai.kbe.poievent.Coordinate;
 import de.htw_berlin.f4.ai.kbe.poievent.Event;
 import de.htw_berlin.f4.ai.kbe.poievent.Poi;
+import de.htw_berlin.opentoken.model.PoiModel;
 import de.htw_berlin.opentoken.model.UserModel;
 
 public interface PoiService {
@@ -20,7 +21,7 @@ public interface PoiService {
 			List<Coordinate> polygon);
 
 	public void deletePOI(Long userId, String name);
-
+	
 	public void addPoiTag(Long userId, String name, String tag);
 
 	public void deletePoiTag(Long userId, String name, String tag);
