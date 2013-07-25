@@ -80,14 +80,12 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 
 	public long createEvent(Long userId, String poiName, String title, String description) {
 		long eventId;
-		//Event event;
 		if(poiService.getPoi(poiName) != null)
 		{	
 			if(userService.validateUser(userId))
 			{	
 				eventId = informationService.erstelleEvent(userId, title, description);
-				//event = informationService.getEventByEventId(eventId);
-				poiService.addEventToPoi(eventId,userService.getUserById(userId), poiName);
+				poiService.addEvent(eventId,userService.getUserById(userId), poiName);
 			}	
 			else
 			{
