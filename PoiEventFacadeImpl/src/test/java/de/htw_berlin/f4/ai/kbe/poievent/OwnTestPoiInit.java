@@ -6,19 +6,28 @@ import java.util.Set;
 
 import org.junit.After;
 import org.junit.Before;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import de.htw_berlin.opentoken.model.PoiModel;
+import de.htw_berlin.opentoken.springdatarepository.PoiRepository;
 
 public class OwnTestPoiInit extends OwnUserInit{
 	
-	Poi musterPoi;
+	PoiModel musterPoi;
+	String poiName;
+	
+	@Autowired
+	PoiRepository poiRepository;
 	
 	@Before
 	public void setup()
 	{
 		super.setUp();
 		
-		facadeImplTest.createSimplePOI(testAdmin, "testPoi", tagsInit(), 13.526187f, 52.457735f);
-		musterPoi = facadeImplTest.getPoi("testPoi");
+		poiName = "testPoi";		
 		
+		facadeImplTest.createSimplePOI(testAdmin, poiName, tagsInit(), 13.526187f, 52.457735f);
+		musterPoi = poiRepository.findByName(poiName);
 	}
 	
 	public Set<String> tagsInit()
