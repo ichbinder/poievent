@@ -271,8 +271,8 @@ public class PoiEventFacadeImpl implements PoiEventFacade{
 		}
 	}
 
-	public void addMessage(Long eventId, Long userId, String title,
-			String content) {
+	public void addMessage(Long eventId, Long userId, String title, String content) 
+	{
 		if(informationService.validateEvent(eventId))
 		{
 			if(informationService.isPartInEvent(eventId, userId) || (informationService.istBesitzerVon(eventId) == userId))
