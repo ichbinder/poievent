@@ -1,14 +1,11 @@
 package de.htw_berlin.opentoken.ApplicationService;
 
 
-import java.util.Set;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import de.htw_berlin.opentoken.model.EventModel;
 import de.htw_berlin.opentoken.model.UserModel;
 import de.htw_berlin.opentoken.springdatarepository.EventRepository;
 import de.htw_berlin.opentoken.springdatarepository.UserRepository;
