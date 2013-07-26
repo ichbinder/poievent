@@ -8,7 +8,7 @@ import de.htw_berlin.opentoken.ApplicationService.PoiService;
 import de.htw_berlin.opentoken.model.UserModel;
 import de.htw_berlin.opentoken.springdatarepository.UserRepository;
 
-public class OenTestAddEventToPoi extends OwnTestPoiInit {
+public class OwnTestAddEventToPoi extends OwnTestPoiInit {
 	
 	@Autowired
 	PoiService poiService;
